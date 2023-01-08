@@ -1,0 +1,62 @@
+homeassistant:
+  name: iFlat
+#   latitude: !secret latitude_coord
+#   longitude: !secret longitude_coord
+#   elevation: 211
+  unit_system: metric
+  country: RU
+  time_zone: Europe/Moscow
+  packages: !include_dir_merge_named includes/packages
+  
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+recorder: !include includes/recorder.yaml
+scene: !include scenes.yaml
+script: !include scripts.yaml
+sensor: !include_dir_merge_list includes/sensor/
+yeelight: !include includes/yeelight.yaml
+light: !include includes/lights.yaml
+input_boolean: !include includes/input_boolean.yaml
+
+# Платформа телеграмм бота
+telegram_bot:
+  - platform: polling
+    api_key: !secret api_token_bot
+    allowed_chat_ids:
+      - !secret tlg_user1_id
+      - !secret tlg_user2_id
+      - !secret tlg_user3_id
+      - !secret tlg_user4_id
+
+# Платформа телеграмм уведомлений
+notify:
+  - platform: telegram
+    name: tlg_user1_id
+    chat_id: !secret tlg_user1_id
+  - platform: telegram
+    name: tlg_user2_id
+    chat_id: !secret tlg_user2_id
+  - platform: telegram
+    name: tlg_user3_id
+    chat_id: !secret tlg_user3_id
+  - platform: telegram
+    name: tlg_user4_id
+    chat_id: !secret tlg_user4_id
+  - platform: group 
+    name: all_telegram
+    services:
+      - service: tlg_user1_id
+      - service: tlg_user2_id
+      - service: tlg_user3_id
+      - service: tlg_user4_id
+  - platform: group 
+    name: mariya_konstantin
+    services:
+      - service: tlg_user1_id
+      - service: tlg_user2_id
