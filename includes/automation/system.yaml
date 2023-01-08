@@ -9,3 +9,13 @@
       data:
           keep_days: 60
           repack: true
+          
+- id: l1k3
+  alias: push_HA_configuration_to_GitHub_repo
+  initial_state: true
+  trigger:
+  # Everyday at 23:33:23 time
+  - platform: time
+    at: '23:33:23'
+  action:
+  - service: shell_command.push_to_github

@@ -15,14 +15,14 @@ default_config:
 tts:
   - platform: google_translate
 
-automation: !include automations.yaml
+automation: !include_dir_merge_list includes/automation
+input_boolean: !include includes/input_boolean.yaml
+light: !include includes/lights.yaml
 recorder: !include includes/recorder.yaml
 scene: !include scenes.yaml
 script: !include scripts.yaml
 sensor: !include_dir_merge_list includes/sensor/
 yeelight: !include includes/yeelight.yaml
-light: !include includes/lights.yaml
-input_boolean: !include includes/input_boolean.yaml
 
 # Платформа телеграмм бота
 telegram_bot:
@@ -60,3 +60,6 @@ notify:
     services:
       - service: tlg_user1_id
       - service: tlg_user2_id
+      
+shell_command:
+  push_to_github: cd /config && bash ./ha_gitpush.sh
