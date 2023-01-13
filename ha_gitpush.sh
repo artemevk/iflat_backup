@@ -2,7 +2,7 @@
 # Change this to your Home Assistant config folder if it is different
 # cd /config
 
-git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /config/.ssh/id_rsa -F /dev/null'
+git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -F /dev/null'
 
 # Удалить папку из индекса git
 # git rm --cached .ssh
