@@ -4,7 +4,6 @@ cd /config
 
 # Add all files to the repository with respect to .gitignore rules
 git add .
-# check
 
 # Commit changes with message with current date stamp
 git commit -m "config files on `date +'%d-%m-%Y %H:%M:%S'`"
