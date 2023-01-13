@@ -9,15 +9,15 @@ kitchen_room:
         - platform: time_pattern
           hours: "/1"
       condition:
-        alias: "Влажность < 60"
+        alias: "Влажность < 70"
         condition: or
         conditions:
           - condition: numeric_state
             entity_id: sensor.palm_soil_moisture
-            below: 60
+            below: 70
           - condition: numeric_state
             entity_id: sensor.limon_soil_moisture
-            below: 60
+            below: 70
       action:
         - service: notify.mariya_konstantin
           data:
@@ -29,20 +29,20 @@ kitchen_room:
       trigger:
         - platform: numeric_state
           entity_id: sensor.palm_soil_moisture
-          above: 70
+          above: 80
         - platform: numeric_state
           entity_id: sensor.limon_soil_moisture
-          above: 70
+          above: 80
       condition:
-        alias: "Влажность > 70"
+        alias: "Влажность > 80"
         condition: and
         conditions:
           - condition: numeric_state
             entity_id: sensor.palm_soil_moisture
-            above: 70
+            above: 80
           - condition: numeric_state
             entity_id: sensor.limon_soil_moisture
-            above: 70
+            above: 80
       action:
         - service: notify.mariya_konstantin
           data:

@@ -72,11 +72,6 @@ childrens_room:
 
     - alias: "switch_off_light_childrens_room"
       trigger:
-        - platform: state
-          entity_id: binary_sensor.childrens_room_motion_occupancy
-          to: "off"
-          for:
-            minutes: 5
         - platform: time_pattern
           minutes: "/5"
       condition:
@@ -84,6 +79,7 @@ childrens_room:
           - condition: state
             entity_id: input_boolean.auto_mode_childrens_room_light
             state: "on"
+          - "{{ as_timestamp(now()) - as_timestamp(states.binary_sensor.childrens_room_motion_occupancy.last_changed) > 300 }}"
           - or:
             - condition: state
               entity_id: light.childrens_room_ceiling_lamp
