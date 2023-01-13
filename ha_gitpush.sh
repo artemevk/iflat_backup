@@ -1,6 +1,6 @@
 # Go to /config folder or 
 # Change this to your Home Assistant config folder if it is different
-cd /config
+# cd /config
 
 git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /config/.ssh/id_rsa -F /dev/null'
 
@@ -15,7 +15,7 @@ git add .
 git commit -m "config files on `date +'%d-%m-%Y %H:%M:%S'`"
 
 # Push changes towards GitHub
-git push -u origin master
+git push origin master
 
 # https://peyanski.com/automatic-home-assistant-backup-to-github/
 # Если вы уже зарегистрировали свою папку .idea , вам нужно удалить ее из индекса git
