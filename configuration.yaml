@@ -63,4 +63,4 @@ notify:
       - service: tlg_user2_id
       
 shell_command:
-  push_to_github: bash ./config/ha_gitpush.sh
+  push_to_github: bash /config/ha_gitpush.sh
