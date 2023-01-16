@@ -15,6 +15,15 @@ default_config:
 tts:
   - platform: google_translate
 
+frontend:
+  extra_module_url:
+    - /hacsfiles/ha-yandex-icons/yandex-icons.js 
+
+lovelace:
+  resources:
+    - url: /local/mini-media-player-bundle.js?v=1.16.5
+      type: module
+
 automation: !include_dir_merge_list includes/automation
 binary_sensor: !include includes/binary_sensor.yaml
 input_boolean: !include includes/input_boolean.yaml
