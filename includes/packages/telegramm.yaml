@@ -46,6 +46,7 @@ telegramm:
             inline_keyboard:
               - "Отчет о системе:/report"
               - "Выключить освещение:/turn_off_light_in_flat"
+              - "Сигнализация:/alarm_menu"
                 
     - id: Отчет при запуске системы
       alias: start_message
@@ -83,6 +84,7 @@ telegramm:
               inline_keyboard:
                 - "Отчет:/report"
                 - "Выкл. освещение:/turn_off_light_in_flat"
+                - "Сигнализация:/alarm_menu"
 
     # Отчет о системе по запросу
     - id: Отчет о системе по запросу
@@ -132,3 +134,61 @@ telegramm:
         service: light.turn_off
         target:
           entity_id: light.childrens_room_ceiling_lamp
+          
+    # Сигнализация
+    - id: Меню Сигнализация
+      alias: alarm_menu
+      initial_state: true
+      trigger:
+        - platform: event # по запросу из telegramm
+          event_type: telegram_callback
+          event_data:
+            command: '/alarm_menu'
+        - platform: event # по запросу из telegramm
+          event_type: telegram_command
+          event_data:
+            command: '/alarm_menu'
+      action:
+        - service: telegram_bot.send_message
+          data_template:
+            target: "{{ trigger.event.data.user_id }}"
+            message: Сигнализация
+            inline_keyboard:
+              - "Вкл.:/turn_on_alarm, Выкл.:/turn_off_alarm"
+              - "Главное меню:/start"
+
+    - id: turn_on_alarm
+      alias: turn_on_alarm
+      initial_state: true
+      trigger:
+        - platform: event # по запросу из telegramm
+          event_type: telegram_callback
+          event_data:
+            command: '/turn_on_alarm'
+        - platform: event # по запросу из telegramm
+          event_type: telegram_command
+          event_data:
+            command: '/turn_on_alarm'
+      action:
+        service: alarm_control_panel.alarm_arm_away
+        data: {}
+        target:
+          entity_id: alarm_control_panel.home_alarm
+
+    - id: turn_off_alarm
+      alias: turn_off_alarm
+      initial_state: true
+      trigger:
+        - platform: event # по запросу из telegramm
+          event_type: telegram_callback
+          event_data:
+            command: '/turn_off_alarm'
+        - platform: event # по запросу из telegramm
+          event_type: telegram_command
+          event_data:
+            command: '/turn_off_alarm'
+      action:
+        service: alarm_control_panel.alarm_disarm
+        data: {}
+        target:
+          entity_id: alarm_control_panel.home_alarm
