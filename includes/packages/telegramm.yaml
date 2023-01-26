@@ -169,6 +169,15 @@ telegramm:
           event_type: telegram_command
           event_data:
             command: '/turn_on_alarm'
+        - platform: state
+          entity_id:
+            - person.artemevk
+            - person.artemevam
+          to: "not_home"
+      condition:
+        condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: "disarmed"
       action:
         service: alarm_control_panel.alarm_arm_away
         data: {}
@@ -187,6 +196,14 @@ telegramm:
           event_type: telegram_command
           event_data:
             command: '/turn_off_alarm'
+        - platform: state
+          entity_id:
+            - person.artemevk
+            - person.artemevam
+          to: "home"
+      condition:
+        condition: template
+        value_template: '{{ states.alarm_control_panel.home_alarm != "disarmed" }}'
       action:
         service: alarm_control_panel.alarm_disarm
         data: {}
