@@ -21,7 +21,11 @@ kitchen_room:
       action:
         - service: notify.mariya_konstantin
           data:
-            message: Мы высохли, дайте попить. Ваши цветы.
+            message: | 
+              {{"\U0001F940"}} Мы высохли, дайте попить. 
+              {{- " "}}{{"\U0001F34B"}}: {{ states.sensor.limon_soil_moisture.state }}
+              {{- ", "}}{{"\U0001F334"}}: {{ states.sensor.palm_soil_moisture.state }}
+              Ваши цветы.
 
     - id: Благодарность
       alias: wet_flowers
@@ -46,4 +50,8 @@ kitchen_room:
       action:
         - service: notify.mariya_konstantin
           data:
-            message: Спасибо за то, что полили нас. Ваши цветы.
+            message: | 
+              {{"\U0001FAB4"}} Спасибо за то, что полили нас.
+              {{- " "}}{{"\U0001F34B"}}: {{ states.sensor.limon_soil_moisture.state }}
+              {{- ", "}}{{"\U0001F334"}}: {{ states.sensor.palm_soil_moisture.state }}
+              Ваши цветы.
