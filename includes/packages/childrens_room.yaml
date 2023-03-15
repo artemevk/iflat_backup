@@ -13,7 +13,7 @@ childrens_room:
       - condition: numeric_state
         entity_id: binary_sensor.childrens_room_motion_occupancy
         attribute: illuminance
-        below: 50
+        below: 200
       - condition: time
         after: "09:00:00"
         before: "21:00:00"
