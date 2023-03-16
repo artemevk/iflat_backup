@@ -11,10 +11,10 @@
         "linkquality": 58
     },
     "0xa4c138507fc3da4d": {
-        "energy": 3.53,
+        "energy": 3.61,
         "power": 0,
         "current": 0.03,
-        "voltage": 222,
+        "voltage": 221,
         "state": "ON",
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
@@ -22,9 +22,9 @@
         "linkquality": 54
     },
     "0x00158d00047def18": {
-        "temperature": 37.75,
-        "humidity": 20.59,
-        "pressure": 994,
+        "temperature": 37.81,
+        "humidity": 26.23,
+        "pressure": 998.1,
         "linkquality": 178,
         "voltage": 2915,
         "battery": 43,
