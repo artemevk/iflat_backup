@@ -11,10 +11,10 @@
         "linkquality": 58
     },
     "0xa4c138507fc3da4d": {
-        "energy": 3.61,
+        "energy": 3.68,
         "power": 0,
         "current": 0.03,
-        "voltage": 221,
+        "voltage": 222,
         "state": "ON",
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
@@ -22,9 +22,9 @@
         "linkquality": 54
     },
     "0x00158d00047def18": {
-        "temperature": 37.81,
-        "humidity": 26.23,
-        "pressure": 998.1,
+        "temperature": 37.75,
+        "humidity": 20.05,
+        "pressure": 1012.4,
         "linkquality": 178,
         "voltage": 2915,
         "battery": 43,
@@ -43,8 +43,8 @@
         "battery": 100,
         "device_temperature": 26,
         "power_outage_count": 93,
-        "illuminance": 3,
-        "illuminance_lux": 3,
+        "illuminance": 0,
+        "illuminance_lux": 0,
         "occupancy": false
     }
 }
