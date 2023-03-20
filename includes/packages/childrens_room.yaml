@@ -7,13 +7,13 @@ childrens_room:
         entity_id: binary_sensor.childrens_room_motion_occupancy
         to: "on"
       condition:
-      - condition: state
-        entity_id: light.childrens_room_ceiling_lamp
-        state: "off"
-      - condition: numeric_state
-        entity_id: binary_sensor.childrens_room_motion_occupancy
-        attribute: illuminance
-        below: 200
+    #   - condition: state
+    #     entity_id: light.childrens_room_ceiling_lamp
+    #     state: "off"
+    #   - condition: numeric_state
+    #     entity_id: binary_sensor.childrens_room_motion_occupancy
+    #     attribute: illuminance
+    #     below: 100
       - condition: time
         after: "09:00:00"
         before: "21:00:00"
@@ -34,13 +34,13 @@ childrens_room:
         entity_id: binary_sensor.childrens_room_motion_occupancy
         to: "on"
       condition:
-      - condition: state
-        entity_id: light.childrens_room_ceiling_lamp
-        state: "off"
-      - condition: numeric_state
-        entity_id: binary_sensor.childrens_room_motion_occupancy
-        attribute: illuminance
-        below: 50
+    #   - condition: state
+    #     entity_id: light.childrens_room_ceiling_lamp
+    #     state: "off"
+    #   - condition: numeric_state
+    #     entity_id: binary_sensor.childrens_room_motion_occupancy
+    #     attribute: illuminance
+    #     below: 50
       - condition: time
         after: "23:00:00"
         before: "06:00:00"
