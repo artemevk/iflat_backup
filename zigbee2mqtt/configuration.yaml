@@ -23,6 +23,8 @@ devices:
   '0x00158d00047def18':
     friendly_name: freezer
   '0x00124b00281b0401':
-    friendly_name: '0x00124b00281b0401'
+    friendly_name: womens_happines
   '0x00158d0008d91f54':
     friendly_name: childrens_room_motion
+  '0x00124b002871d590':
+    friendly_name: palm
