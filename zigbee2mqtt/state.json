@@ -4,14 +4,14 @@
         "energy": 0.39,
         "power": 0,
         "current": 0,
-        "voltage": 225,
+        "voltage": 224,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
         "linkquality": 65
     },
     "0xa4c138507fc3da4d": {
-        "energy": 4.6,
+        "energy": 4.68,
         "power": 0,
         "current": 0.03,
         "voltage": 225,
@@ -22,9 +22,9 @@
         "linkquality": 43
     },
     "0x00158d00047def18": {
-        "temperature": 37.98,
-        "humidity": 24.19,
-        "pressure": 989.2,
+        "temperature": 38.02,
+        "humidity": 19.4,
+        "pressure": 992.2,
         "linkquality": 182,
         "voltage": 2905,
         "battery": 37,
@@ -45,7 +45,7 @@
         "power_outage_count": 93,
         "illuminance": 3,
         "illuminance_lux": 3,
-        "occupancy": true,
+        "occupancy": false,
         "linkquality": 51
     },
     "0x00124b00281b0401": {
@@ -54,18 +54,18 @@
         "pressure": null,
         "illuminance": 42,
         "illuminance_lux": 1,
-        "soil_moisture": 96,
-        "temperature_ds": 22.93,
+        "soil_moisture": 87,
+        "temperature_ds": 22.12,
         "linkquality": 120
     },
     "0x00124b002871d590": {
         "pressure": null,
         "illuminance": 48,
         "illuminance_lux": 1,
-        "battery": 61,
+        "battery": 59,
         "voltage": 2900,
-        "soil_moisture": 89,
-        "temperature_ds": 22.56,
+        "soil_moisture": 74,
+        "temperature_ds": 22.12,
         "linkquality": 102
     }
 }
