@@ -11,9 +11,9 @@
         "linkquality": 51
     },
     "0x00158d00047def18": {
-        "temperature": 36.35,
-        "humidity": 13.6,
-        "pressure": 1008.6,
+        "temperature": 36.42,
+        "humidity": 14.66,
+        "pressure": 1007.4,
         "linkquality": 174,
         "voltage": 2865,
         "battery": 10,
@@ -38,25 +38,25 @@
         "linkquality": 18
     },
     "0x00124b00281b0401": {
-        "voltage": 2900,
-        "battery": 41,
+        "voltage": 2800,
+        "battery": 35,
         "pressure": 0,
-        "illuminance": 45,
+        "illuminance": 46,
         "illuminance_lux": 1,
-        "soil_moisture": 58,
-        "temperature_ds": 22.75,
+        "soil_moisture": 75,
+        "temperature_ds": 22.5,
         "linkquality": 76,
         "temperature_bme": 0,
         "humidity": 0
     },
     "0x00124b002871d590": {
         "pressure": 0,
-        "illuminance": 50,
+        "illuminance": 49,
         "illuminance_lux": 1,
         "battery": 24,
         "voltage": 2800,
-        "soil_moisture": 51,
-        "temperature_ds": 21.37,
+        "soil_moisture": 79,
+        "temperature_ds": 20.93,
         "linkquality": 105,
         "temperature_bme": 0,
         "humidity": 0
