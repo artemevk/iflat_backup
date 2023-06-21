@@ -179,6 +179,7 @@ telegramm:
           entity_id:
             - person.artemevk
             - person.artemevam
+            - person.artemevi
           to: "not_home"
       condition:
         - condition: state
@@ -189,6 +190,9 @@ telegramm:
           state: "not_home"
         - condition: state
           entity_id: person.artemevam
+          state: "not_home"
+        - condition: state
+          entity_id: person.artemevi
           state: "not_home"
       action:
         service: alarm_control_panel.alarm_arm_away
@@ -212,6 +216,7 @@ telegramm:
           entity_id:
             - person.artemevk
             - person.artemevam
+            - person.artemevi
           to: "home"
       condition:
         condition: template

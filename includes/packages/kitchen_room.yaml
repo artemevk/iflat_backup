@@ -19,11 +19,11 @@ kitchen_room:
             entity_id: sensor.limon_soil_moisture
             below: 70
       action:
-        - service: notify.mariya_konstantin
+        - service: notify.mariya_konstantin_ivan
           data:
             message: | 
               {{"\U0001F940"}} Мы высохли, дайте попить. 
-              {{- " "}}{{"\U0001F34B"}}: {{ states.sensor.limon_soil_moisture.state }}
+              {{- " "}}{{"\U0001F337"}}: {{ states.sensor.womens_happines_soil_moisture.state }}
               {{- ", "}}{{"\U0001F334"}}: {{ states.sensor.palm_soil_moisture.state }}
               Ваши цветы.
 
@@ -48,10 +48,10 @@ kitchen_room:
             entity_id: sensor.limon_soil_moisture
             above: 80
       action:
-        - service: notify.mariya_konstantin
+        - service: notify.mariya_konstantin_ivan
           data:
             message: | 
               {{"\U0001FAB4"}} Спасибо за то, что полили нас.
-              {{- " "}}{{"\U0001F34B"}}: {{ states.sensor.limon_soil_moisture.state }}
+              {{- " "}}{{"\U0001F337"}}: {{ states.sensor.womens_happines_soil_moisture.state }}
               {{- ", "}}{{"\U0001F334"}}: {{ states.sensor.palm_soil_moisture.state }}
               Ваши цветы.

@@ -18,7 +18,7 @@
       entity_id: alarm_control_panel.home_alarm
       to: "triggered"
   action:
-    - service: notify.mariya_konstantin
+    - service: notify.mariya_konstantin_ivan
       data:
         message: "ВНИМАНИЕ! Сработала сигнализация!"
 
@@ -28,7 +28,7 @@
       entity_id: alarm_control_panel.home_alarm
       to: "disarmed"
   action:
-    - service: notify.mariya_konstantin
+    - service: notify.mariya_konstantin_ivan
       data:
         message: "ВНИМАНИЕ! Сигнализация отключена."
 
@@ -38,7 +38,7 @@
       entity_id: alarm_control_panel.home_alarm
       to: "pending"
   action:
-    - service: notify.mariya_konstantin
+    - service: notify.mariya_konstantin_ivan
       data:
         message: "ВНИМАНИЕ! Сигнализация перешла в режим ожидания."
 
@@ -48,7 +48,7 @@
       entity_id: alarm_control_panel.home_alarm
       to: "armed_away"
   action:
-    - service: notify.mariya_konstantin
+    - service: notify.mariya_konstantin_ivan
       data:
         message: "ВНИМАНИЕ! Сигнализация активирована."
 
@@ -58,7 +58,7 @@
       entity_id: alarm_control_panel.home_alarm
       to: "armed_home"
   action:
-    - service: notify.mariya_konstantin
+    - service: notify.mariya_konstantin_ivan
       data:
         # Using multi-line notation allows for easier quoting
         message: >
