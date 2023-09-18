@@ -1,5 +1,9 @@
 telegramm:
 
+  timer:
+    1m:
+      duration: "00:01:00"
+
   sensor:
 
     - platform: template
@@ -62,6 +66,9 @@ telegramm:
               {{"\U0001F4AC"}} iFlat 
               {{"\U0001F567"}} Зафиксирован запуск в {{ states('sensor.time_date') }} 
               {{"\U0001F4C3"}} Отчет о состоянии будет через 1 минуту
+        - service: timer.start
+          target:
+            entity_id: timer.1m
         # Задержка и отправка полного отчета через минуту
         - delay: 00:01:00
         - service: notify.tlg_user1_id

@@ -6,6 +6,10 @@ kitchen_room:
       alias: dry_flowers
       initial_state: true
       trigger:
+        - platform: event
+          event_type: timer.finished
+          event_data:
+            entity_id: timer.1m
         - platform: time_pattern
           hours: "/2"
       condition:
@@ -31,6 +35,10 @@ kitchen_room:
       alias: wet_flowers
       initial_state: true
       trigger:
+        - platform: event
+          event_type: timer.finished
+          event_data:
+            entity_id: timer.1m
         - platform: numeric_state
           entity_id: sensor.palm_soil_moisture
           above: 80
