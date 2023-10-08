@@ -1,100 +1,118 @@
 childrens_room:
 
-    automation:
-    - alias: "switch_on_light_childrens_room"
-      trigger:
-        platform: state
-        entity_id: binary_sensor.childrens_room_motion_occupancy
-        to: "on"
-      condition:
-    #   - condition: state
-    #     entity_id: light.childrens_room_ceiling_lamp
-    #     state: "off"
-      - condition: numeric_state
-        entity_id: binary_sensor.childrens_room_motion_occupancy
-        attribute: illuminance
-        below: 130
-      - condition: time
-        after: "09:00:00"
-        before: "21:00:00"
-      - condition: state
-        entity_id: input_boolean.auto_mode_childrens_room_light
-        state: "on"
-      action:
-      - service: light.turn_on
-        target:
-          entity_id: light.childrens_room_ceiling_lamp
-        data:
-          brightness: 255
-          kelvin: 4000
+  input_boolean:
+    resolution_auto_mode_childrens_room_light:
+      initial: true
+      icon: mdi:lightbulb-auto
 
-    - alias: "switch_on_light_childrens_room_night_mode"
-      trigger:
-        platform: state
-        entity_id: binary_sensor.childrens_room_motion_occupancy
-        to: "on"
-      condition:
-    #   - condition: state
-    #     entity_id: light.childrens_room_ceiling_lamp
-    #     state: "off"
-    #   - condition: numeric_state
-    #     entity_id: binary_sensor.childrens_room_motion_occupancy
-    #     attribute: illuminance
-    #     below: 50
-      - condition: time
-        after: "23:00:00"
-        before: "06:00:00"
+  automation:
+  
+  - id: Включить автоматический режим управления светом
+    alias: reset_resolution_auto_mode_childrens_room_light
+    initial_state: true
+    trigger:
+    - platform: time
+      at: "15:32:00"
+    condition:
+    - condition: state
+      entity_id: input_boolean.resolution_auto_mode_childrens_room_light
+      state: "off"
+    action:
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.resolution_auto_mode_childrens_room_light
+
+  - alias: "switch_on_light_childrens_room"
+    trigger:
+      platform: state
+      entity_id: binary_sensor.childrens_room_motion_occupancy
+      to: "on"
+    condition:
+    # - condition: numeric_state
+    #   entity_id: binary_sensor.childrens_room_motion_occupancy
+    #   attribute: illuminance
+    #   below: 130
+    - condition: time
+      after: "09:00:00"
+      before: "21:00:00"
+    - condition: state
+      entity_id: input_boolean.resolution_auto_mode_childrens_room_light
+      state: "on"
+    action:
+    - service: light.turn_on
+      target:
+        entity_id: light.childrens_room_ceiling_lamp
+      data:
+        brightness: 255
+        kelvin: 4000
+
+  - alias: "switch_on_light_childrens_room_night_mode"
+    trigger:
+      platform: state
+      entity_id: binary_sensor.childrens_room_motion_occupancy
+      to: "on"
+    condition:
+  #   - condition: state
+  #     entity_id: light.childrens_room_ceiling_lamp
+  #     state: "off"
+  #   - condition: numeric_state
+  #     entity_id: binary_sensor.childrens_room_motion_occupancy
+  #     attribute: illuminance
+  #     below: 50
+    - condition: time
+      after: "23:00:00"
+      before: "06:00:00"
+    - condition: state
+      entity_id: input_boolean.resolution_auto_mode_childrens_room_light
+      state: "on"
+    action:
+    - service: light.turn_on
+      target:
+        entity_id: light.yeelight_s1_child_1
+      data:
+        brightness: 1
+        kelvin: 4000
+
+  - alias: "switch_on_light_childrens_room_alarm"
+    trigger:
+      platform: time
+      at: "06:40:00"
+    condition: 
+      condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: "on"
+    action:
+    - service: light.turn_on
+      target:
+        entity_id: light.childrens_room_ceiling_lamp
+      data:
+        effect: Sunrise
+
+  - alias: "switch_off_light_childrens_room"
+    trigger:
+    - platform: template
+      value_template: "{{ as_timestamp(now()) - as_timestamp(states.binary_sensor.childrens_room_motion_occupancy.last_changed) > 300 }}"
+    condition:
+      and:
       - condition: state
-        entity_id: input_boolean.auto_mode_childrens_room_light
+        entity_id: input_boolean.resolution_auto_mode_childrens_room_light
         state: "on"
-      action:
-      - service: light.turn_on
-        target:
+      - or:
+        - condition: time
+          after: "09:00:00"
+          before: "21:00:00"
+        - condition: time
+          after: "23:00:00"
+          before: "06:00:00"
+      - or:
+        - condition: state
+          entity_id: light.childrens_room_ceiling_lamp
+          state: "on"
+        - condition: state
           entity_id: light.yeelight_s1_child_1
-        data:
-          brightness: 1
-          kelvin: 4000
+          state: "on"
+    action:
+      service: light.turn_off
+      target:
+        entity_id: light.childrens_room_ceiling_lamp
 
-    - alias: "switch_on_light_childrens_room_alarm"
-      trigger:
-        platform: time
-        at: "06:40:00"
-      condition: 
-        condition: state
-        entity_id: binary_sensor.workday_sensor
-        state: "on"
-      action:
-      - service: light.turn_on
-        target:
-          entity_id: light.childrens_room_ceiling_lamp
-        data:
-          effect: Sunrise
-
-    - alias: "switch_off_light_childrens_room"
-      trigger:
-        - platform: time_pattern
-          minutes: "/5"
-      condition:
-        and:
-          - condition: state
-            entity_id: input_boolean.auto_mode_childrens_room_light
-            state: "on"
-          - "{{ as_timestamp(now()) - as_timestamp(states.binary_sensor.childrens_room_motion_occupancy.last_changed) > 300 }}"
-          - or:
-            - condition: state
-              entity_id: light.childrens_room_ceiling_lamp
-              state: "on"
-            - condition: state
-              entity_id: light.yeelight_s1_child_1
-              state: "on"
-          - or:
-            - condition: time
-              after: "09:00:00"
-              before: "21:00:00"
-            - condition: time
-              after: "23:00:00"
-              before: "06:00:00"
-      action:
-        service: light.turn_off
-        target:
-          entity_id: light.childrens_room_ceiling_lamp
