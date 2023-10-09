@@ -6,22 +6,20 @@ kitchen_room:
       alias: dry_flowers
       initial_state: true
       trigger:
-        - platform: event
-          event_type: timer.finished
-          event_data:
-            entity_id: timer.1m
         - platform: time_pattern
           hours: "/2"
       condition:
-        alias: "Влажность < 70"
-        condition: or
-        conditions:
-          - condition: numeric_state
-            entity_id: sensor.palm_soil_moisture
-            below: 70
-          - condition: numeric_state
-            entity_id: sensor.womens_happines_soil_moisture
-            below: 70
+        and:
+          - condition: state
+            entity_id: timer.1m
+            state: "idle"
+          - or:
+            - condition: numeric_state
+              entity_id: sensor.palm_soil_moisture
+              below: 70
+            - condition: numeric_state
+              entity_id: sensor.womens_happines_soil_moisture
+              below: 70
       action:
         - service: notify.mariya_konstantin_ivan
           data:
@@ -35,10 +33,6 @@ kitchen_room:
       alias: wet_flowers
       initial_state: true
       trigger:
-        - platform: event
-          event_type: timer.finished
-          event_data:
-            entity_id: timer.1m
         - platform: numeric_state
           entity_id: sensor.palm_soil_moisture
           above: 80
@@ -46,15 +40,15 @@ kitchen_room:
           entity_id: sensor.womens_happines_soil_moisture
           above: 80
       condition:
-        alias: "Влажность > 80"
-        condition: and
-        conditions:
-          - condition: numeric_state
-            entity_id: sensor.palm_soil_moisture
-            above: 80
-          - condition: numeric_state
-            entity_id: sensor.womens_happines_soil_moisture
-            above: 80
+        - condition: state
+          entity_id: timer.1m
+          state: "idle"
+        - condition: numeric_state
+          entity_id: sensor.palm_soil_moisture
+          above: 80
+        - condition: numeric_state
+          entity_id: sensor.womens_happines_soil_moisture
+          above: 80
       action:
         - service: notify.mariya_konstantin_ivan
           data:

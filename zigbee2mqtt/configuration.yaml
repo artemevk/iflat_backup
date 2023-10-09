@@ -30,3 +30,5 @@ devices:
     friendly_name: fridge
   '0x00158d00047def18':
     friendly_name: server_temperature
+  '0x00124b00246e611a':
+    friendly_name: childrens_room_remote

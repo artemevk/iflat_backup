@@ -5,6 +5,32 @@ childrens_room:
       initial: true
       icon: mdi:lightbulb-auto
 
+  script:
+    blink_childrens_room_light:
+      sequence:
+        - service: light.toggle
+          data:
+            flash: short
+            transition: 0
+          target:
+            entity_id:
+              - light.yeelight_s1_child_1
+              - light.yeelight_s1_child_2
+              - light.yeelight_s1_child_4
+              - light.yeelight_s1_child_5
+        - delay: 00:00:00.25
+        - service: light.toggle
+          data:
+            flash: short
+            transition: 0
+          target:
+            entity_id:
+              - light.yeelight_s1_child_1
+              - light.yeelight_s1_child_2
+              - light.yeelight_s1_child_4
+              - light.yeelight_s1_child_5
+        - delay: 00:00:00.25
+
   automation:
   
   - id: Включить автоматический режим управления светом
@@ -13,6 +39,9 @@ childrens_room:
     trigger:
     - platform: time
       at: "15:32:00"
+    - platform: state
+      entity_id: sensor.childrens_room_remote_action
+      to: "button_5_single"
     condition:
     - condition: state
       entity_id: input_boolean.resolution_auto_mode_childrens_room_light
@@ -21,6 +50,25 @@ childrens_room:
     - service: input_boolean.turn_on
       target:
         entity_id: input_boolean.resolution_auto_mode_childrens_room_light
+    - service: script.blink_childrens_room_light
+        
+  - id: Выключить автоматический режим управления светом
+    alias: prohibit_auto_mode_childrens_room_light
+    initial_state: true
+    trigger:
+    - platform: state
+      entity_id: sensor.childrens_room_remote_action
+      to: "button_1_single"
+    condition:
+    - condition: state
+      entity_id: input_boolean.resolution_auto_mode_childrens_room_light
+      state: "on"
+    action:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.resolution_auto_mode_childrens_room_light
+    - service: script.blink_childrens_room_light
+    - service: script.blink_childrens_room_light
 
   - alias: "switch_on_light_childrens_room"
     trigger:
@@ -88,6 +136,18 @@ childrens_room:
       data:
         effect: Sunrise
 
+  - alias: "switch_on_Sunset_mode_light_childrens_room"
+    trigger:
+    - platform: state
+      entity_id: sensor.childrens_room_remote_action
+      to: "button_7_single"
+    action:
+    - service: light.turn_on
+      target:
+        entity_id: light.childrens_room_ceiling_lamp
+      data:
+        effect: Sunset
+
   - alias: "switch_off_light_childrens_room"
     trigger:
     - platform: template
@@ -113,6 +173,26 @@ childrens_room:
           state: "on"
     action:
       service: light.turn_off
+      target:
+        entity_id: light.childrens_room_ceiling_lamp
+        
+  - alias: "forced_switch_off_light_childrens_room"
+    trigger:
+    - platform: state
+      entity_id: sensor.childrens_room_remote_action
+      to: "button_2_single"
+    action:
+      service: light.turn_off
+      target:
+        entity_id: light.childrens_room_ceiling_lamp
+        
+  - alias: "forced_switch_on_light_childrens_room"
+    trigger:
+    - platform: state
+      entity_id: sensor.childrens_room_remote_action
+      to: "button_6_single"
+    action:
+      service: light.turn_on
       target:
         entity_id: light.childrens_room_ceiling_lamp
 
