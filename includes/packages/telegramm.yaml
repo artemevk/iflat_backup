@@ -29,6 +29,20 @@ telegramm:
           value_template: "{{states.binary_sensor | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
           icon_template: mdi:counter
           
+        batteries_states_msg:
+          value_template: |
+            {{"\U0001F50B"}}Батарейки:{% for entity_id in state_attr('sensor.min_batteries_state', 'entity_id') %}{% set friendly_name = entity_id.split('.')[1].split('_bat')[0] %}{% set value = states(entity_id, with_unit=True) %}
+            {{ friendly_name | regex_replace('_', ' ') + ": " + value }}{% endfor %}
+             
+        report_msg:
+          value_template: |
+            {{"\U0001F4CB"}} Состояние системы:
+            {{"\U0001F50C"}} Свичей недоступно - {{ states('sensor.unavailable_now_switch') }}
+            {{"\U0001F321"}} Сенсоров недоступно - {{ states('sensor.unavailable_now_sensor') }}
+            {{"\U0001F51F"}} Бинарных сенсоров недоступно - {{ states('sensor.unavailable_now_binary_sensor') }}
+            {{"\U0001F4A1"}} Светильников недоступно - {{ states('sensor.unavailable_now_light') }}
+             
+          
   automation:
             
     - alias: 'Telegram bot main menu'
@@ -48,7 +62,7 @@ telegramm:
             # title: "#system"
             message: 'Добро пожаловать в главное меню. Выберите действие:'
             inline_keyboard:
-              - "Отчет о системе:/report"
+              - "Отчет о системе:/report, Батарейки:/battaries_states"
               - "Выключить освещение:/turn_off_light_in_flat"
               - "Сигнализация:/alarm_menu"
                 
@@ -63,9 +77,7 @@ telegramm:
           data:
             title: "#system"
             message: | 
-              {{"\U0001F4AC"}} iFlat 
-              {{"\U0001F567"}} Зафиксирован запуск в {{ states('sensor.time_date') }} 
-              {{"\U0001F4C3"}} Отчет о состоянии будет через 1 минуту
+              {{"\U0001F5A5"}} Зафиксирован запуск. Отчет о состоянии будет через 1 минуту.
         - service: timer.start
           target:
             entity_id: timer.1m
@@ -75,12 +87,9 @@ telegramm:
           data:
             title: "#system"
             message: |
-              {{"\U0001F4CB"}} Состояние системы
-              {{"\U0001F567"}} Отчет за {{ states('sensor.time_date') }}
-              {{"\U0001F50C"}} Свичей недоступно - {{ states('sensor.unavailable_now_switch') }}
-              {{"\U0001F321"}} Сенсоров недоступно - {{ states('sensor.unavailable_now_sensor') }}
-              {{"\U0001F51F"}} Бинарных сенсоров недоступно - {{ states('sensor.unavailable_now_binary_sensor') }}
-              {{"\U0001F4A1"}} Светильников недоступно - {{ states('sensor.unavailable_now_light') }}
+              {{ states("sensor.report_msg") }}
+              
+              {{ states('sensor.batteries_states_msg') }}
         # Задержка 2 с
         - delay: 00:00:02
         - service: notify.tlg_user1_id
@@ -114,13 +123,30 @@ telegramm:
           data_template:
             target: "{{ trigger.event.data.user_id }}"
             title: "#system"
-            message:  | 
-              {{"\U0001F4CB"}} Состояние системы
-              {{"\U0001F567"}} Отчет за {{ states('sensor.time_date') }}
-              {{"\U0001F50C"}} Свичей недоступно - {{ states('sensor.unavailable_now_switch') }}
-              {{"\U0001F321"}} Сенсоров недоступно - {{ states('sensor.unavailable_now_sensor') }}
-              {{"\U0001F51F"}} Бинарных сенсоров недоступно - {{ states('sensor.unavailable_now_binary_sensor') }}
-              {{"\U0001F4A1"}} Светильников недоступно - {{ states('sensor.unavailable_now_light') }}
+            message: |
+              {{ states('sensor.report_msg') }}
+              
+              {{ states('sensor.batteries_states_msg') }}
+            inline_keyboard:
+              - "Главное меню:/start"
+              
+    - id: Отправить отчет о состоянии батареек
+      alias: send_battaries_states_msg
+      initial_state: true
+      trigger:
+        - platform: event
+          event_type: telegram_callback # встроенная клавиатура telegramm
+          event_data:
+            command: '/battaries_states'
+        - platform: numeric_state
+          entity_id: sensor.min_batteries_state
+          below: 40
+      action:
+        - service: telegram_bot.send_message
+          data_template:
+            target: "{{ trigger.event.data.user_id }}"
+            title: "#system"
+            message: "{{ states('sensor.batteries_states_msg') }}"
             inline_keyboard:
               - "Главное меню:/start"
 

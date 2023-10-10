@@ -55,16 +55,12 @@
              {% endif %}
         icon_template: mdi:clock
 
-# Это приведет к неисправностям в версии 2022.12.0. Пожалуйста, устраните эту проблему перед обновлением.
-#   - platform: uptime
-#     name: online
-
   - platform: template
     sensors:
-      online_custom:
+      uptime_custom:
          friendly_name: "HA онлайн"
          value_template: >
-          {% set uptime = (as_timestamp(now()) - as_timestamp(states.sensor.online.state)) / 60 | int %}
+          {% set uptime = (as_timestamp(now()) - as_timestamp(states.sensor.uptime.state)) / 60 | int %}
           {% set minutes = (( uptime % 60) / 1) | int %}
           {% set hours = ((uptime % 1440) / 60) | int %}
           {% set days = (uptime / 1440) | int %}
@@ -87,3 +83,17 @@
                   {{ minutes }} мин.
               {% endif %}
              {% endif %}
+             
+
+  - platform: group
+    name: "min_batteries_state"
+    device_class: battery
+    type: min
+    entities:
+     - sensor.childrens_room_motion_battery
+     - sensor.childrens_room_remote_battery
+     - sensor.door_sensor_battery
+     - sensor.fridge_battery
+     - sensor.palm_battery
+     - sensor.server_temperature_battery
+     - sensor.womens_happines_battery
