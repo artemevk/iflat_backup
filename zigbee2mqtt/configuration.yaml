@@ -20,8 +20,6 @@ devices:
     friendly_name: childrens_room_socket
   '0x00158d00091aebb7':
     friendly_name: door_sensor
-  '0x00124b00281b0401':
-    friendly_name: womens_happines
   '0x00158d0008d91f54':
     friendly_name: childrens_room_motion
   '0x00124b002871d590':
@@ -32,3 +30,5 @@ devices:
     friendly_name: server_temperature
   '0x00124b00246e611a':
     friendly_name: childrens_room_remote
+  '0x00124b00281b0401':
+    friendly_name: '0x00124b00281b0401'
