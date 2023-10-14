@@ -11,11 +11,11 @@
         "linkquality": 25
     },
     "0x00158d00091aebb7": {
-        "linkquality": 105,
+        "linkquality": 123,
         "contact": true,
         "voltage": 3035,
         "battery": 100,
-        "device_temperature": 25,
+        "device_temperature": 26,
         "power_outage_count": 9
     },
     "0x00158d0008d91f54": {
@@ -26,7 +26,7 @@
         "illuminance": 7,
         "illuminance_lux": 7,
         "occupancy": false,
-        "linkquality": 51
+        "linkquality": 36
     },
     "0x00124b002871d590": {
         "pressure": 0,
@@ -34,18 +34,18 @@
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3200,
-        "soil_moisture": 71,
-        "temperature_ds": 22.18,
-        "linkquality": 109,
+        "soil_moisture": 69,
+        "temperature_ds": 22.43,
+        "linkquality": 112,
         "temperature_bme": 0,
         "humidity": 0
     },
     "0x00158d00048742e4": {
-        "temperature": 6.72,
-        "humidity": 72.51,
-        "pressure": 992.3,
-        "linkquality": 105,
-        "voltage": 3195,
+        "temperature": 4.57,
+        "humidity": 68.34,
+        "pressure": 980.4,
+        "linkquality": 91,
+        "voltage": 3075,
         "battery": 100,
         "power_outage_count": 171
     },
@@ -53,25 +53,28 @@
         "voltage": 3065,
         "battery": 100,
         "power_outage_count": 2727,
-        "temperature": 38.09,
-        "humidity": 21.24,
-        "pressure": 995.8,
+        "temperature": 37.67,
+        "humidity": 22.19,
+        "pressure": 983.9,
         "linkquality": 200
     },
     "0xa4c138507fc3da4d": {
         "state": "ON",
-        "energy": 18.59,
+        "energy": 18.67,
         "power": 0,
         "current": 0.03,
         "voltage": 227,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
-        "linkquality": 47
+        "linkquality": 54
     },
     "0x00124b00246e611a": {
         "linkquality": 87,
         "battery": 100,
         "voltage": 3100
+    },
+    "0x00124b00281b0401": {
+        "linkquality": 76
     }
 }
