@@ -4,7 +4,7 @@
         "energy": 0.63,
         "power": 0,
         "current": 0,
-        "voltage": 227,
+        "voltage": 229,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
@@ -19,12 +19,12 @@
         "power_outage_count": 9
     },
     "0x00158d0008d91f54": {
-        "voltage": 3035,
+        "voltage": 3025,
         "battery": 100,
         "device_temperature": 25,
         "power_outage_count": 97,
-        "illuminance": 7,
-        "illuminance_lux": 7,
+        "illuminance": 4,
+        "illuminance_lux": 4,
         "occupancy": false,
         "linkquality": 32
     },
@@ -34,36 +34,36 @@
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3100,
-        "soil_moisture": 75,
-        "temperature_ds": 20.56,
+        "soil_moisture": 83,
+        "temperature_ds": 21.68,
         "linkquality": 91,
         "temperature_bme": 0,
         "humidity": 0
     },
     "0x00158d00048742e4": {
-        "temperature": 25.79,
-        "humidity": 84.59,
-        "pressure": 992.2,
+        "temperature": 24.3,
+        "humidity": 48.38,
+        "pressure": 969.1,
         "linkquality": 109,
         "voltage": 3005,
         "battery": 100,
         "power_outage_count": 171
     },
     "0x00158d00047def18": {
-        "voltage": 3065,
+        "voltage": 3055,
         "battery": 100,
         "power_outage_count": 2727,
-        "temperature": 36.55,
-        "humidity": 24.23,
-        "pressure": 994.9,
+        "temperature": 36.7,
+        "humidity": 23.68,
+        "pressure": 971.6,
         "linkquality": 196
     },
     "0xa4c138507fc3da4d": {
         "state": "ON",
-        "energy": 20.09,
+        "energy": 20.17,
         "power": 0,
         "current": 0.03,
-        "voltage": 228,
+        "voltage": 230,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
@@ -71,8 +71,8 @@
     },
     "0x00124b00246e611a": {
         "linkquality": 58,
-        "battery": 100,
-        "voltage": 3100
+        "battery": 37,
+        "voltage": 2900
     },
     "0x00124b00281b0401": {
         "linkquality": 76
