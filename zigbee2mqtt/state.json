@@ -15,13 +15,13 @@
         "contact": true,
         "voltage": 3035,
         "battery": 100,
-        "device_temperature": 26,
+        "device_temperature": 25,
         "power_outage_count": 9
     },
     "0x00158d0008d91f54": {
         "voltage": 3025,
         "battery": 100,
-        "device_temperature": 26,
+        "device_temperature": 25,
         "power_outage_count": 97,
         "illuminance": 3,
         "illuminance_lux": 3,
@@ -30,40 +30,40 @@
     },
     "0x00124b002871d590": {
         "pressure": 0,
-        "illuminance": 43,
+        "illuminance": 42,
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3000,
-        "soil_moisture": 82,
-        "temperature_ds": 21.25,
+        "soil_moisture": 78,
+        "temperature_ds": 20.87,
         "linkquality": 91,
         "temperature_bme": 0,
         "humidity": 0
     },
     "0x00158d00048742e4": {
-        "temperature": 24.68,
-        "humidity": 40.93,
-        "pressure": 998.7,
+        "temperature": 24.03,
+        "humidity": 30.65,
+        "pressure": 990.3,
         "linkquality": 109,
         "voltage": 3005,
         "battery": 100,
         "power_outage_count": 171
     },
     "0x00158d00047def18": {
-        "voltage": 3055,
+        "voltage": 3065,
         "battery": 100,
         "power_outage_count": 2727,
-        "temperature": 37.47,
-        "humidity": 13.29,
-        "pressure": 1001.5,
+        "temperature": 37.41,
+        "humidity": 12.19,
+        "pressure": 993,
         "linkquality": 196
     },
     "0xa4c138507fc3da4d": {
         "state": "ON",
-        "energy": 20.71,
+        "energy": 20.79,
         "power": 0,
         "current": 0.03,
-        "voltage": 229,
+        "voltage": 228,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
@@ -71,17 +71,17 @@
     },
     "0x00124b00246e611a": {
         "linkquality": 58,
-        "battery": 73,
-        "voltage": 3000
+        "battery": 38,
+        "voltage": 2900
     },
     "0x00124b00281b0401": {
         "linkquality": 76,
         "pressure": null,
-        "illuminance": 37,
+        "illuminance": 38,
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3200,
-        "soil_moisture": 91,
-        "temperature_ds": 19.93
+        "soil_moisture": 88,
+        "temperature_ds": 19.5
     }
 }
