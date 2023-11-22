@@ -4,7 +4,7 @@
         "energy": 0.63,
         "power": 0,
         "current": 0,
-        "voltage": 227,
+        "voltage": 225,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
@@ -21,10 +21,10 @@
     "0x00158d0008d91f54": {
         "voltage": 3025,
         "battery": 100,
-        "device_temperature": 26,
+        "device_temperature": 25,
         "power_outage_count": 97,
-        "illuminance": 8,
-        "illuminance_lux": 8,
+        "illuminance": 7,
+        "illuminance_lux": 7,
         "occupancy": false,
         "linkquality": 32
     },
@@ -34,36 +34,36 @@
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3000,
-        "soil_moisture": 76,
-        "temperature_ds": 20.68,
+        "soil_moisture": 80,
+        "temperature_ds": 20.5,
         "linkquality": 91,
         "temperature_bme": 0,
         "humidity": 0
     },
     "0x00158d00048742e4": {
-        "temperature": 24.13,
-        "humidity": 30.48,
-        "pressure": 993.2,
+        "temperature": 23.32,
+        "humidity": 26.79,
+        "pressure": 993.8,
         "linkquality": 109,
         "voltage": 3005,
         "battery": 100,
         "power_outage_count": 171
     },
     "0x00158d00047def18": {
-        "voltage": 3055,
+        "voltage": 3065,
         "battery": 100,
         "power_outage_count": 2727,
-        "temperature": 37.31,
-        "humidity": 11.45,
-        "pressure": 996,
+        "temperature": 37.03,
+        "humidity": 10.34,
+        "pressure": 996.6,
         "linkquality": 196
     },
     "0xa4c138507fc3da4d": {
         "state": "ON",
-        "energy": 20.86,
+        "energy": 20.94,
         "power": 0,
         "current": 0.03,
-        "voltage": 228,
+        "voltage": 226,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
@@ -81,7 +81,7 @@
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3200,
-        "soil_moisture": 86,
-        "temperature_ds": 19.31
+        "soil_moisture": 90,
+        "temperature_ds": 19.37
     }
 }
