@@ -3,7 +3,7 @@
       name: yeelight_s1_child_1
       model: color4
       transition: 2000
-    192.168.0.221:
+    192.168.0.226:
       name: yeelight_s1_child_2
       model: color4
       transition: 2000
