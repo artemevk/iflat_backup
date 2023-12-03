@@ -21,7 +21,7 @@
     "0x00158d0008d91f54": {
         "voltage": 3025,
         "battery": 100,
-        "device_temperature": 26,
+        "device_temperature": 25,
         "power_outage_count": 97,
         "illuminance": 0,
         "illuminance_lux": 0,
@@ -34,18 +34,18 @@
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3000,
-        "soil_moisture": 71,
-        "temperature_ds": 21.25,
+        "soil_moisture": 74,
+        "temperature_ds": 20.93,
         "linkquality": 58,
         "temperature_bme": 0,
         "humidity": 0
     },
     "0x00158d00048742e4": {
-        "temperature": 24.03,
-        "humidity": 31.23,
-        "pressure": 990.6,
+        "temperature": 24.86,
+        "humidity": 69.79,
+        "pressure": 980.5,
         "linkquality": 87,
-        "voltage": 3005,
+        "voltage": 3015,
         "battery": 100,
         "power_outage_count": 171
     },
@@ -53,16 +53,16 @@
         "voltage": 3055,
         "battery": 100,
         "power_outage_count": 2727,
-        "temperature": 37.44,
-        "humidity": 19.58,
-        "pressure": 993.3,
+        "temperature": 37.1,
+        "humidity": 17.7,
+        "pressure": 983.2,
         "linkquality": 200
     },
     "0xa4c138507fc3da4d": {
         "state": "ON",
-        "energy": 21.7,
+        "energy": 21.78,
         "power": 0,
-        "current": 0.02,
+        "current": 0.03,
         "voltage": 226,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
@@ -77,11 +77,11 @@
     "0x00124b00281b0401": {
         "linkquality": 102,
         "pressure": null,
-        "illuminance": 38,
+        "illuminance": 39,
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3200,
-        "soil_moisture": 89,
-        "temperature_ds": 20.18
+        "soil_moisture": 92,
+        "temperature_ds": 19.37
     }
 }
