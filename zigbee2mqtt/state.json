@@ -13,13 +13,13 @@
     "0x00158d00091aebb7": {
         "linkquality": 131,
         "contact": true,
-        "voltage": 3035,
+        "voltage": 3025,
         "battery": 100,
-        "device_temperature": 25,
+        "device_temperature": 24,
         "power_outage_count": 9
     },
     "0x00158d0008d91f54": {
-        "voltage": 3035,
+        "voltage": 3025,
         "battery": 100,
         "device_temperature": 26,
         "power_outage_count": 97,
@@ -30,20 +30,20 @@
     },
     "0x00124b002871d590": {
         "pressure": 0,
-        "illuminance": 44,
+        "illuminance": 45,
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3000,
-        "soil_moisture": 72,
-        "temperature_ds": 20.31,
+        "soil_moisture": 70,
+        "temperature_ds": 20.06,
         "linkquality": 58,
         "temperature_bme": 0,
         "humidity": 0
     },
     "0x00158d00048742e4": {
-        "temperature": 23.63,
-        "humidity": 62.85,
-        "pressure": 1013.4,
+        "temperature": 23.06,
+        "humidity": 38.86,
+        "pressure": 1008,
         "linkquality": 87,
         "voltage": 3005,
         "battery": 100,
@@ -53,17 +53,17 @@
         "voltage": 3055,
         "battery": 100,
         "power_outage_count": 2727,
-        "temperature": 37.19,
-        "humidity": 16.64,
-        "pressure": 1016.3,
+        "temperature": 37.31,
+        "humidity": 12.55,
+        "pressure": 1010.7,
         "linkquality": 200
     },
     "0xa4c138507fc3da4d": {
         "state": "ON",
-        "energy": 22.16,
+        "energy": 22.23,
         "power": 0,
         "current": 0.03,
-        "voltage": 225,
+        "voltage": 226,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
@@ -77,11 +77,11 @@
     "0x00124b00281b0401": {
         "linkquality": 102,
         "pressure": null,
-        "illuminance": 38,
+        "illuminance": 40,
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3200,
         "soil_moisture": 88,
-        "temperature_ds": 18.37
+        "temperature_ds": 18
     }
 }
