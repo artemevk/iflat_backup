@@ -4,7 +4,7 @@
         "energy": 0.63,
         "power": 0,
         "current": 0,
-        "voltage": 230,
+        "voltage": 228,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
@@ -19,31 +19,31 @@
         "power_outage_count": 9
     },
     "0x00158d0008d91f54": {
-        "voltage": 3025,
+        "voltage": 3035,
         "battery": 100,
         "device_temperature": 26,
         "power_outage_count": 97,
-        "illuminance": 7,
-        "illuminance_lux": 7,
-        "occupancy": false,
+        "illuminance": 4,
+        "illuminance_lux": 4,
+        "occupancy": true,
         "linkquality": 65
     },
     "0x00124b002871d590": {
         "pressure": 0,
         "illuminance": 45,
         "illuminance_lux": 1,
-        "battery": 89,
+        "battery": 87,
         "voltage": 3000,
-        "soil_moisture": 64,
-        "temperature_ds": 22.31,
+        "soil_moisture": 66,
+        "temperature_ds": 21.87,
         "linkquality": 58,
         "temperature_bme": 0,
         "humidity": 0
     },
     "0x00158d00048742e4": {
-        "temperature": 24.75,
-        "humidity": 45.01,
-        "pressure": 964.3,
+        "temperature": 25.25,
+        "humidity": 49.55,
+        "pressure": 974.9,
         "linkquality": 87,
         "voltage": 3015,
         "battery": 100,
@@ -53,17 +53,17 @@
         "voltage": 3055,
         "battery": 100,
         "power_outage_count": 2727,
-        "temperature": 37.91,
-        "humidity": 19.34,
-        "pressure": 967,
+        "temperature": 37.4,
+        "humidity": 22.98,
+        "pressure": 977.4,
         "linkquality": 200
     },
     "0xa4c138507fc3da4d": {
         "state": "ON",
-        "energy": 23.45,
+        "energy": 23.53,
         "power": 0,
         "current": 0.03,
-        "voltage": 231,
+        "voltage": 232,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
@@ -77,11 +77,11 @@
     "0x00124b00281b0401": {
         "linkquality": 102,
         "pressure": null,
-        "illuminance": 65,
+        "illuminance": 39,
         "illuminance_lux": 1,
         "battery": 100,
         "voltage": 3200,
-        "soil_moisture": 71,
-        "temperature_ds": 20.68
+        "soil_moisture": 73,
+        "temperature_ds": 20.18
     }
 }
