@@ -147,6 +147,18 @@ childrens_room:
         entity_id: light.childrens_room_ceiling_lamp
       data:
         effect: Sunset
+        
+  - alias: "switch_on_Sunrise_mode_light_childrens_room"
+    trigger:
+    - platform: state
+      entity_id: sensor.childrens_room_remote_action
+      to: "button_3_single"
+    action:
+    - service: light.turn_on
+      target:
+        entity_id: light.childrens_room_ceiling_lamp
+      data:
+        effect: Sunrise
 
   - alias: "switch_off_light_childrens_room"
     trigger:
