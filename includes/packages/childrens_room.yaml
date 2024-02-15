@@ -35,7 +35,7 @@ childrens_room:
   
   - id: Включить автоматический режим управления светом
     alias: reset_resolution_auto_mode_childrens_room_light
-    initial_state: true
+    # initial_state: true
     trigger:
     - platform: time
       at: "15:32:00"
@@ -54,7 +54,6 @@ childrens_room:
         
   - id: Выключить автоматический режим управления светом
     alias: prohibit_auto_mode_childrens_room_light
-    initial_state: true
     trigger:
     - platform: state
       entity_id: sensor.childrens_room_remote_action
