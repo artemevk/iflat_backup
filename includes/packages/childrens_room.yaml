@@ -2,7 +2,7 @@ childrens_room:
 
   input_boolean:
     resolution_auto_mode_childrens_room_light:
-      initial: true
+    #   initial: true
       icon: mdi:lightbulb-auto
 
   script:
@@ -120,7 +120,8 @@ childrens_room:
         brightness: 1
         kelvin: 4000
 
-  - alias: "switch_on_light_childrens_room_alarm"
+  - alias: "switch_on_light_childrens_room_alarm_clock"
+    id: "morning_alarm_clock"
     trigger:
       platform: time
       at: "06:40:00"
