@@ -1,32 +1,32 @@
 {
     "0xa4c138b0790349b7": {
-        "state": "OFF",
-        "energy": 0.64,
+        "state": "ON",
+        "energy": 0.8,
         "power": 0,
         "current": 0,
-        "voltage": 220,
+        "voltage": 224,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
-        "linkquality": 29
+        "linkquality": 40
     },
     "0x00158d00091aebb7": {
-        "linkquality": 116,
+        "linkquality": 109,
         "contact": true,
         "voltage": 3035,
         "battery": 100,
-        "device_temperature": 26,
+        "device_temperature": 27,
         "power_outage_count": 9
     },
     "0x00158d0008d91f54": {
         "voltage": 3025,
         "battery": 100,
-        "device_temperature": 26,
+        "device_temperature": 27,
         "power_outage_count": 101,
         "illuminance": 7,
         "illuminance_lux": 7,
         "occupancy": false,
-        "linkquality": 29
+        "linkquality": 47
     },
     "0x00124b002871d590": {
         "pressure": 0,
@@ -34,17 +34,17 @@
         "illuminance_lux": 1.0118124058555886,
         "battery": 25,
         "voltage": 2800,
-        "soil_moisture": 62.94,
-        "temperature_ds": 23.5,
-        "linkquality": 65,
+        "soil_moisture": 58.54,
+        "temperature_ds": 24.43,
+        "linkquality": 80,
         "temperature_bme": 0,
         "humidity": 0
     },
     "0x00158d00048742e4": {
-        "temperature": 19.59,
-        "humidity": 52.79,
-        "pressure": 1002.3,
-        "linkquality": 51,
+        "temperature": 20.78,
+        "humidity": 51.47,
+        "pressure": 1002.4,
+        "linkquality": 61,
         "voltage": 2995,
         "battery": 97,
         "power_outage_count": 171
@@ -53,10 +53,10 @@
         "voltage": 3045,
         "battery": 100,
         "power_outage_count": 2727,
-        "temperature": 37.99,
-        "humidity": 24.22,
-        "pressure": 1005,
-        "linkquality": 207
+        "temperature": 38.4,
+        "humidity": 24.62,
+        "pressure": 1005.2,
+        "linkquality": 204
     },
     "0xa4c138507fc3da4d": {
         "state": "ON",
@@ -70,12 +70,12 @@
         "linkquality": 65
     },
     "0x00124b00246e611a": {
-        "linkquality": 40,
+        "linkquality": 43,
         "battery": 23,
         "voltage": 2800
     },
     "0x00124b00281b0401": {
-        "linkquality": 47,
+        "linkquality": 91,
         "pressure": 0,
         "illuminance": 55,
         "illuminance_lux": 1.012511582563655,
