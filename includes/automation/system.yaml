@@ -19,3 +19,18 @@
     at: '23:33:23'
   action:
   - service: shell_command.push_to_github
+  
+- id: ihome_disconnected
+  alias: ihome_disconnected
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.ihome
+    from:
+    to: 'off'
+  action:
+  - service: notify.tlg_user1_id
+    data:
+      title: "#system"
+      message: "Сервер iHome не отвечает!"
