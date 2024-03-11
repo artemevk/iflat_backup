@@ -8,6 +8,9 @@
       - switch
       - light
       - alarm_control_panel
+      - timer
+      - automation
+      - update
     entities: 
 #Объем БД
       - sensor.maria_db_size
