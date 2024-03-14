@@ -5,7 +5,7 @@ telegramm:
       duration: "00:01:00"
       
     ihome_offline:
-      duration: "00:03:00"
+      duration: "00:02:00"
       icon: mdi:lan-disconnect
 
   sensor:
