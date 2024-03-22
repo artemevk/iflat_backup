@@ -32,3 +32,5 @@ devices:
     friendly_name: childrens_room_remote
   '0x00124b00281b0401':
     friendly_name: womens_happines
+  '0xb43522fffef9b116':
+    friendly_name: living_room_scene_switch

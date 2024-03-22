@@ -1,0 +1,32 @@
+scene:
+  - name: Romantic
+    icon: "mdi:flower-tulip"
+    entities:
+      light.childrens_room_ceiling_lamp:
+        state: "on"
+        brightness: 200
+        color_mode: "xy"
+        xy_color: [0.33, 0.66]
+  - name: Movies
+    entities:
+      light.childrens_room_ceiling_lamp:
+        state: "on"
+        brightness: 125
+  - name: Standard
+    entities:
+      light.childrens_room_ceiling_lampg:
+        state: "on"
+        brightness: 125
+        color_mode: "white"
+  - name: Full
+    entities:
+      light.childrens_room_ceiling_lamp:
+        state: "on"
+        brightness: 125
+        color_mode: "white"
+  - name: Night
+    entities:
+      light.childrens_room_ceiling_lamp:
+        state: "on"
+        brightness: 76
+        color_mode: "white"

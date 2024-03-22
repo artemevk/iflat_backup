@@ -1,5 +1,35 @@
 childrens_room:
 
+  scene:
+    - name: Night
+      entities:
+        light.childrens_room_ceiling_lamp:
+          state: "on"
+          brightness_pct: 30
+          rgbww_color: warm white
+    - name: Standard
+      entities:
+        light.childrens_room_ceiling_lampg:
+          state: "on"
+          brightness_pct: 50
+          rgbww_color: white
+    - name: Full
+      entities:
+        light.childrens_room_ceiling_lamp:
+          state: "on"
+          brightness_pct: 100
+          rgbww_color: white
+
+
+  input_select:
+    scenes:
+      name: scene
+      options:
+        - Night
+        - Standard
+        - Full
+      initial: Standard
+
   input_boolean:
     resolution_auto_mode_childrens_room_light:
     #   initial: true
@@ -32,6 +62,18 @@ childrens_room:
         - delay: 00:00:00.25
 
   automation:
+  
+  - id: apply_scene
+    alias: apply_scene
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_select.scenes
+    action:
+      - service: scene.turn_on
+        data_template:
+          entity_id: scene.{{trigger.to_state.state}}
+          transition: 2
   
   - id: Включить автоматический режим управления светом
     alias: reset_resolution_auto_mode_childrens_room_light
@@ -193,6 +235,9 @@ childrens_room:
     - platform: state
       entity_id: sensor.childrens_room_remote_action
       to: "button_2_single"
+    - platform: state
+      entity_id: sensor.living_room_scene_switch_action
+      to: "1_double"
     action:
       service: light.turn_off
       target:
@@ -203,8 +248,23 @@ childrens_room:
     - platform: state
       entity_id: sensor.childrens_room_remote_action
       to: "button_6_single"
+    - platform: state
     action:
       service: light.turn_on
       target:
         entity_id: light.childrens_room_ceiling_lamp
+      data:
+        brightness: 255
+        kelvin: 4000
 
+  - id: change_scene_childrens_room
+    alias: change_scene_childrens_room
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.living_room_scene_switch_action
+        to: "1_single"
+    action:
+        service: input_select.select_next
+        data:
+          entity_id: input_select.scenes
