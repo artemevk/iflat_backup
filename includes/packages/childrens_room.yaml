@@ -5,20 +5,20 @@ childrens_room:
       entities:
         light.childrens_room_ceiling_lamp:
           state: "on"
-          brightness_pct: 30
-          rgbww_color: warm white
+          brightness: 64
+          color_mode: "warm white"
     - name: Standard
       entities:
-        light.childrens_room_ceiling_lampg:
+        light.childrens_room_ceiling_lamp:
           state: "on"
-          brightness_pct: 50
-          rgbww_color: white
+          brightness: 125
+          color_mode: "white"
     - name: Full
       entities:
         light.childrens_room_ceiling_lamp:
           state: "on"
-          brightness_pct: 100
-          rgbww_color: white
+          brightness: 255
+          color_mode: "white"
 
 
   input_select:

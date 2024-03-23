@@ -26,7 +26,7 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.ihome
+    - binary_sensor.ihome_connection
     to: 'off'
   action:
   - service: timer.start
@@ -54,7 +54,7 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.ihome
+    - binary_sensor.ihome_connection
     to: 'on'
   action:
   - service: timer.cancel
