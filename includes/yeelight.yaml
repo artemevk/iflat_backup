@@ -1,0 +1,25 @@
+#   devices:
+#     192.168.0.220:
+#       name: yeelight_s1_child_1
+#       model: color4
+#       transition: 2000
+#     192.168.0.226:
+#       name: yeelight_s1_child_2
+#       model: color4
+#       transition: 2000
+#     192.168.0.222:
+#       name: yeelight_s1_child_3
+#       model: color4
+#       transition: 2000
+#     192.168.0.223:
+#       name: yeelight_s1_child_4
+#       model: color4
+#       transition: 2000
+#     192.168.0.224:
+#       name: yeelight_s1_child_5
+#       model: color4
+#       transition: 2000
+#     192.168.0.225:
+#       name: yeelight_s1_child_6
+#       model: color4
+#       transition: 2000
