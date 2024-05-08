@@ -1,21 +1,38 @@
 childrens_room:
 
   scene:
-    - name: Night
+    - name: night
       entities:
         light.childrens_room_ceiling_lamp:
           state: "on"
           brightness: 64
           color_mode: "color_temp"
           color_temp: 370
-    - name: Standard
+    - name: min
+      entities:
+        light.yeelight_s1_child_1:
+          state: "on"
+          brightness: 1
+          color_mode: "color_temp"
+          color_temp: 250
+        light.yeelight_s1_child_2:
+          state: "off"
+        light.yeelight_s1_child_3:
+          state: "off"
+        light.yeelight_s1_child_4:
+          state: "off"
+        light.yeelight_s1_child_5:
+          state: "off"
+        light.yeelight_s1_child_6:
+          state: "off"
+    - name: standard
       entities:
         light.childrens_room_ceiling_lamp:
           state: "on"
           brightness: 125
           color_mode: "color_temp"
           color_temp: 250
-    - name: Full
+    - name: full
       entities:
         light.childrens_room_ceiling_lamp:
           state: "on"
@@ -29,6 +46,7 @@ childrens_room:
       name: scene
       options:
         - Night
+        - Min
         - Standard
         - Full
       initial: Standard
@@ -65,7 +83,7 @@ childrens_room:
         - delay: 00:00:00.25
 
   automation:
-  
+
   - id: apply_scene
     alias: apply_scene
     initial_state: true
@@ -77,7 +95,7 @@ childrens_room:
         data_template:
           entity_id: scene.{{trigger.to_state.state}}
           transition: 2
-  
+
   - id: Включить автоматический режим управления светом
     alias: reset_resolution_auto_mode_childrens_room_light
     # initial_state: true
@@ -96,7 +114,7 @@ childrens_room:
       target:
         entity_id: input_boolean.resolution_auto_mode_childrens_room_light
     - service: script.blink_childrens_room_light
-        
+
   - id: Выключить автоматический режим управления светом
     alias: prohibit_auto_mode_childrens_room_light
     trigger:
@@ -114,7 +132,7 @@ childrens_room:
     - service: script.blink_childrens_room_light
     - service: script.blink_childrens_room_light
 
-  - alias: "switch_on_light_childrens_room"
+  - alias: "auto_switch_on_light_childrens_room"
     trigger:
       platform: state
       entity_id: binary_sensor.childrens_room_motion_occupancy
@@ -131,12 +149,9 @@ childrens_room:
       entity_id: input_boolean.resolution_auto_mode_childrens_room_light
       state: "on"
     action:
-    - service: light.turn_on
-      target:
-        entity_id: light.childrens_room_ceiling_lamp
-      data:
-        brightness: 255
-        kelvin: 4000
+      - service: scene.turn_on
+        target:
+          entity_id: scene.full
 
   - alias: "switch_on_light_childrens_room_night_mode"
     trigger:
@@ -158,19 +173,16 @@ childrens_room:
       entity_id: input_boolean.resolution_auto_mode_childrens_room_light
       state: "on"
     action:
-    - service: light.turn_on
-      target:
-        entity_id: light.yeelight_s1_child_1
-      data:
-        brightness: 1
-        kelvin: 4000
+      - service: scene.turn_on
+        target:
+          entity_id: scene.full
 
   - alias: "switch_on_light_childrens_room_alarm_clock"
     id: "morning_alarm_clock"
     trigger:
       platform: time
       at: "06:40:00"
-    condition: 
+    condition:
       condition: state
       entity_id: binary_sensor.workday_sensor
       state: "on"
@@ -192,7 +204,7 @@ childrens_room:
         entity_id: light.childrens_room_ceiling_lamp
       data:
         effect: Sunset
-        
+
   - alias: "switch_on_Sunrise_mode_light_childrens_room"
     trigger:
     - platform: state
@@ -205,7 +217,7 @@ childrens_room:
       data:
         effect: Sunrise
 
-  - alias: "switch_off_light_childrens_room"
+  - alias: "auto_switch_off_light_childrens_room"
     trigger:
     - platform: template
       value_template: "{{ as_timestamp(now()) - as_timestamp(states.binary_sensor.childrens_room_motion_occupancy.last_changed) > 300 }}"
@@ -232,7 +244,7 @@ childrens_room:
       service: light.turn_off
       target:
         entity_id: light.childrens_room_ceiling_lamp
-        
+
   - alias: "switch_off_light_childrens_room"
     trigger:
     - platform: state
@@ -245,7 +257,7 @@ childrens_room:
       service: light.turn_off
       target:
         entity_id: light.childrens_room_ceiling_lamp
-        
+
   - alias: "switch_on_light_childrens_room"
     trigger:
       - platform: state
@@ -262,9 +274,6 @@ childrens_room:
       service: light.turn_on
       target:
         entity_id: light.childrens_room_ceiling_lamp
-      # data:
-      #   brightness: 255
-      #   kelvin: 4000
 
   - id: change_scene_childrens_room
     alias: change_scene_childrens_room
