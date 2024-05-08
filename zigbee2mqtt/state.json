@@ -13,11 +13,11 @@
     "0x00158d00091aebb7": {
         "linkquality": 134,
         "contact": true,
-        "voltage": 3025,
+        "voltage": 3035,
         "battery": 100,
         "device_temperature": 23,
         "power_outage_count": 9,
-        "trigger_count": 2
+        "trigger_count": 0
     },
     "0x00158d0008d91f54": {
         "voltage": 3035,
@@ -31,12 +31,12 @@
     },
     "0x00124b002871d590": {
         "pressure": 0,
-        "illuminance": 43,
-        "illuminance_lux": 1.009717771242342,
+        "illuminance": 1224,
+        "illuminance_lux": 1.325256673959098,
         "battery": 100,
         "voltage": 3000,
-        "soil_moisture": 67.65,
-        "temperature_ds": 20.75,
+        "soil_moisture": 58.06,
+        "temperature_ds": 22,
         "linkquality": 61,
         "temperature_bme": 0,
         "humidity": 0
