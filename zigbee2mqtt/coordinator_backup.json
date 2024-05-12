@@ -4,7 +4,7 @@
     "version": 1,
     "source": "zigbee-herdsman@0.45.0",
     "internal": {
-      "date": "2024-05-11T11:42:30.556Z",
+      "date": "2024-05-12T11:42:30.351Z",
       "znpVersion": 1
     }
   },
@@ -25,7 +25,7 @@
   "network_key": {
     "key": "01030507090b0d0f00020406080a0c0d",
     "sequence_number": 0,
-    "frame_counter": 5351044
+    "frame_counter": 5361054
   },
   "devices": [
     {
@@ -41,7 +41,7 @@
     {
       "nwk_address": "529f",
       "ieee_address": "00124b002871d590",
-      "is_child": true,
+      "is_child": false,
       "link_key": {
         "key": "7472ed54ef9422dacf0bb9648194d167",
         "rx_counter": 0,
