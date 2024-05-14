@@ -4,7 +4,7 @@
         "energy": 1.78,
         "power": 0,
         "current": 0,
-        "voltage": 222,
+        "voltage": 223,
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
@@ -26,7 +26,7 @@
         "power_outage_count": 104,
         "illuminance": 417,
         "illuminance_lux": 417,
-        "occupancy": true,
+        "occupancy": false,
         "linkquality": 7
     },
     "0x00124b002871d590": {
@@ -42,9 +42,9 @@
         "humidity": 0
     },
     "0x00158d00048742e4": {
-        "temperature": 24.23,
-        "humidity": 31.61,
-        "pressure": 1000.6,
+        "temperature": 24.35,
+        "humidity": 32.22,
+        "pressure": 1000.8,
         "linkquality": 65,
         "voltage": 3005,
         "battery": 100,
@@ -78,7 +78,7 @@
     },
     "0xa4c138507fc3da4d": {
         "energy": 34.42,
-        "voltage": 223,
+        "voltage": 222,
         "state": "ON",
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
@@ -93,7 +93,7 @@
         "voltage": 3000
     },
     "0x00124b002a61a44b": {
-        "co2": 806,
+        "co2": 846,
         "auto_brightness": "ON",
         "forced_recalibration": "OFF",
         "factory_reset_co2": "OFF",
@@ -103,12 +103,12 @@
         "high_gas": 2000,
         "low_gas": 400,
         "enable_gas": "OFF",
-        "temperature_1": 25.53,
+        "temperature_1": 25.69,
         "temperature_offset": 0.1,
-        "humidity_1": 27.02,
+        "humidity_1": 27.09,
         "humidity_offset": 1,
-        "illuminance": 30457,
-        "illuminance_lux": 1111,
+        "illuminance": 30659,
+        "illuminance_lux": 1164,
         "night_onoff_backlight": "OFF",
         "automatic_scal": "ON",
         "set_altitude": 0,
@@ -118,7 +118,7 @@
         "internal_or_external": "ON",
         "invert_logic_gas": "OFF",
         "voc_raw_data": 29817,
-        "voc_index": 111,
+        "voc_index": 121,
         "temperature_2": 0,
         "humidity_2": 0,
         "linkquality": 83
