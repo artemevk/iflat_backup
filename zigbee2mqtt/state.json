@@ -17,15 +17,15 @@
         "battery": 100,
         "device_temperature": 25,
         "power_outage_count": 9,
-        "trigger_count": 0
+        "trigger_count": 4
     },
     "0x00158d0008d91f54": {
         "voltage": 3025,
         "battery": 100,
-        "device_temperature": 26,
+        "device_temperature": 25,
         "power_outage_count": 104,
-        "illuminance": 417,
-        "illuminance_lux": 417,
+        "illuminance": 359,
+        "illuminance_lux": 359,
         "occupancy": false,
         "linkquality": 36
     },
@@ -54,9 +54,9 @@
         "voltage": 3015,
         "battery": 100,
         "power_outage_count": 2727,
-        "temperature": 37.67,
-        "humidity": 17.39,
-        "pressure": 1003.2,
+        "temperature": 37.55,
+        "humidity": 17.53,
+        "pressure": 1003.3,
         "linkquality": 196
     },
     "0x00124b00246e611a": {
@@ -67,12 +67,12 @@
     "0x00124b00281b0401": {
         "linkquality": 87,
         "pressure": 0,
-        "illuminance": 2535,
-        "illuminance_lux": 1.7922558226960752,
-        "battery": 20,
+        "illuminance": 2189,
+        "illuminance_lux": 1.65500762876999,
+        "battery": 21,
         "voltage": 2800,
-        "soil_moisture": 95.73,
-        "temperature_ds": 23.56,
+        "soil_moisture": 96.11,
+        "temperature_ds": 23.43,
         "temperature_bme": 0,
         "humidity": 0
     },
@@ -84,7 +84,7 @@
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
         "power": 0,
-        "current": 0.04,
+        "current": 0.03,
         "linkquality": 36
     },
     "0xb43522fffef9b116": {
@@ -93,7 +93,7 @@
         "voltage": 3000
     },
     "0x00124b002a61a44b": {
-        "co2": 904,
+        "co2": 959,
         "auto_brightness": "ON",
         "forced_recalibration": "OFF",
         "factory_reset_co2": "OFF",
@@ -103,12 +103,12 @@
         "high_gas": 2000,
         "low_gas": 400,
         "enable_gas": "OFF",
-        "temperature_1": 25.84,
+        "temperature_1": 26.01,
         "temperature_offset": 0.1,
-        "humidity_1": 27.09,
+        "humidity_1": 26.95,
         "humidity_offset": 1,
-        "illuminance": 30757,
-        "illuminance_lux": 1190,
+        "illuminance": 30353,
+        "illuminance_lux": 1084,
         "night_onoff_backlight": "OFF",
         "automatic_scal": "ON",
         "set_altitude": 0,
@@ -118,7 +118,7 @@
         "internal_or_external": "ON",
         "invert_logic_gas": "OFF",
         "voc_raw_data": 29817,
-        "voc_index": 124,
+        "voc_index": 128,
         "temperature_2": 0,
         "humidity_2": 0,
         "linkquality": 87
@@ -197,7 +197,7 @@
         "linkquality": 83
     },
     "0xa4c138bf35b5bc0b": {
-        "voltage": 224,
+        "voltage": 223,
         "energy": 0,
         "state": "OFF",
         "power": 0,
