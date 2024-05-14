@@ -102,3 +102,85 @@ hallway:
           entity_id: switch.smartintercom_accept_call
       mode: single
 
+    - id: 'smartintercom_call'
+      alias: SmartIntercom Call
+      description: ""
+      trigger:
+        - platform: state
+          entity_id:
+            - binary_sensor.smartintercom_line_detect
+          from: "off"
+          to: "on"
+      condition: []
+      action:
+        - alias: Define Actions
+          variables:
+            action_allow_access: "{{ 'ALLOW_ACCESS_' ~ context.id }}"
+            action_allow_delivery: "{{ 'ALLOW_DELIVERY_' ~ context.id }}"
+            action_reject_access: "{{ 'REJECT_ACCESS_' ~ context.id }}"
+            notification_tag: smartintercom-call-detected
+        - alias: Send Call Notification
+          service: notify.mobile_app_artemevk
+          metadata: {}
+          data:
+            title: Домофон
+            message: Вызов
+            data:
+              tag: "{{ notification_tag }}"
+              url: /lovelace/main
+              actions:
+                - action: "{{ action_allow_access }}"
+                  title: Открыть
+                - action: "{{ action_allow_delivery }}"
+                  title: Открыть курьеру
+                - action: "{{ action_reject_access }}"
+                  title: Сбросить
+                  destructive: true
+          enabled: true
+        - alias: Wait for Notification Response
+          wait_for_trigger:
+            - platform: event
+              event_type: mobile_app_notification_action
+              event_data:
+                action: "{{ action_allow_access }}"
+            - platform: event
+              event_type: mobile_app_notification_action
+              event_data:
+                action: "{{ action_allow_delivery }}"
+            - platform: event
+              event_type: mobile_app_notification_action
+              event_data:
+                action: "{{ action_reject_access }}"
+          timeout:
+            hours: 0
+            minutes: 1
+            seconds: 0
+            milliseconds: 0
+          continue_on_timeout: false
+        - choose:
+            - conditions:
+                - condition: template
+                  value_template: "{{ wait.trigger.event.data.action == action_allow_access }}"
+              sequence:
+                - service: switch.turn_on
+                  target:
+                    entity_id: switch.smartintercom_accept_call
+                  data: {}
+            - conditions:
+                - condition: template
+                  value_template: "{{ wait.trigger.event.data.action == action_allow_delivery }}"
+              sequence:
+                - service: switch.turn_on
+                  target:
+                    entity_id: switch.smartintercom_delivery
+                  data: {}
+            - conditions:
+                - condition: template
+                  value_template: "{{ wait.trigger.event.data.action == action_reject_access }}"
+              sequence:
+                - service: switch.turn_on
+                  target:
+                    entity_id: switch.smartintercom_reject_call
+                  data: {}
+      mode: parallel
+      max: 5

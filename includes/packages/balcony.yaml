@@ -1,12 +1,12 @@
-balcony:
+# balcony:
 
-  automation:
-  - id: balcony_right_switch
-    alias: "balcony_right_switch"
-    trigger:
-      - platform: state
-        entity_id: switch.balcony_light_switch_right
-    action:
-      - service: light.toggle
-        entity_id: light.balcony_led_controller
+#   automation:
+#   - id: balcony_right_switch
+#     alias: "balcony_right_switch"
+#     trigger:
+#       - platform: state
+#         entity_id: switch.balcony_light_switch_right
+#     action:
+#       - service: light.toggle
+#         entity_id: light.balcony_led_controller
           
