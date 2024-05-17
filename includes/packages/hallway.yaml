@@ -33,10 +33,15 @@ hallway:
             {% endif %}
 
   template:
-    - binary_sensor:
-      - name: "smartintercom state"
-        device_class: "door"
-        state: '{{ states("switch.smartintercom_accept_call") }}'
+  - binary_sensor:
+    - name: "smartintercom state"
+      device_class: "door"
+      state: >
+        {% if is_state("switch.smartintercom_accept_call", "on") or is_state("select.smartintercom_modes", "Открывать всегда") %}
+          on
+        {% else %}
+          off
+        {% endif %}
 
   script:
     smartintercom_mode_set:
@@ -108,7 +113,7 @@ hallway:
       trigger:
         - platform: state
           entity_id:
-            - binary_sensor.smartintercom_line_detect
+            - binary_sensor.smartinteircom_line_detect
           from: "off"
           to: "on"
       condition: []

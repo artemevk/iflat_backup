@@ -1,26 +1,42 @@
-  - platform: time_date
-    display_options:
-      - 'time'
-      - 'date'
-      - 'time_date'
+  - platform: template
+    sensors:
+      unavailable_now_light:
+        friendly_name: "Недоступно светильников"
+        value_template: "{{states.light | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+        icon_template: mdi:counter
 
-#   - platform: systemmonitor
-#     resources:
-#     - type: processor_use
-#     - type: disk_use_percent
-#       arg: /
-#     - type: memory_use_percent
-#     - type: last_boot
-#     - type: disk_free
-#       arg: /
-      
-#   - platform: sql
-#     db_url: !secret db_link
-#     queries:
-#       - name: maria_db
-#         query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 2) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
-#         column: 'value'
-#         unit_of_measurement: MB
+      unavailable_now_switch:
+        friendly_name: "Недоступно реле"
+        value_template: "{{states.switch | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+        icon_template: mdi:counter
+
+      unavailable_now_sensor:
+        friendly_name: "Недоступно сенсоров"
+        value_template: "{{states.sensor | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+        icon_template: mdi:counter
+
+      unavailable_now_binary_sensor:
+        friendly_name: "Недоступно бинарных сенсоров"
+        value_template: "{{states.binary_sensor | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+        icon_template: mdi:counter
+
+      unavailable_objects:
+        friendly_name: "Недоступно объектов"
+        value_template: >
+          {{ int(states.sensor.unavailable_now_light.state) + 
+             int(states.sensor.unavailable_now_switch.state) + 
+             int(states.sensor.unavailable_now_sensor.state) + 
+             int(states.sensor.unavailable_now_binary_sensor.state) }}
+        icon_template: >
+          {% if int(states.sensor.unavailable_now_light.state) + 
+             int(states.sensor.unavailable_now_switch.state) + 
+             int(states.sensor.unavailable_now_sensor.state) + 
+             int(states.sensor.unavailable_now_binary_sensor.state) == 0 %}
+            mdi:thumb-up
+          {% else %}
+            mdi:thumb-down
+          {% endif %}
+          
 
 # Время с последней перезагрузки
   - platform: template
@@ -30,7 +46,7 @@
         entity_id:
           - sensor.time
         value_template: >
-           {% set uptime = as_timestamp (now()) -as_timestamp(states.sensor.last_boot.state) | int %}
+           {% set uptime = as_timestamp (now()) - as_timestamp(states.sensor.system_monitor_last_boot.state) | int %}
            {% set minutes = (( uptime % 3600) / 60) | int %}
            {% set hours = ((uptime % 86400) / 3600) | int %}
            {% set days = (uptime / 86400) | int %}
@@ -83,12 +99,12 @@
                   {{ minutes }} мин.
               {% endif %}
              {% endif %}
-             
+
 
   - platform: group
     name: "min_batteries_state"
     device_class: battery
-    ignore_non_numeric: true
+    ignore_non_numeric: false
     type: min
     entities:
      - sensor.childrens_room_motion_battery

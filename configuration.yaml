@@ -104,6 +104,10 @@ shell_command:
   push_to_github: bash /config/ha_gitpush.sh
 
 yandex_smart_home:
+  notifier:
+    - oauth_token: !secret oauth_token
+      skill_id: !secret skill_id
+      user_id: !secret user_id
   entity_config:
     binary_sensor.smartintercom_state:
       name: Домофон
