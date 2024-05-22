@@ -25,6 +25,8 @@ lovelace:
     type: module
   - url: /local/mini-graph-card-bundle.js?v=0.12.1
     type: module
+  - url: /webrtc/webrtc-camera.js
+    type: module
 
 alarm_control_panel:
   - platform: manual
