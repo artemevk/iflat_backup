@@ -61,6 +61,23 @@ hallway:
       mode: queued
 
   automation:
+    - id: 'doorbell_call'
+      alias: Дверной звонок
+      description: ""
+      mode: restart
+      trigger:
+        - platform: state
+          entity_id:
+            - sensor.doorbell_button_action
+      condition: []
+      action:
+        - service: switch.toggle
+          target:
+            entity_id: switch.balcony_light_switch_left
+        - service: light.toggle
+          entity_id: light.balcony_led_controller
+
+
     - id: 'smartintercom_accept_call_on'
       alias: Домофон (включается accept_call)
       description: ''

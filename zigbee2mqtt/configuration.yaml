@@ -49,6 +49,8 @@ devices:
     friendly_name: balcony_light_switch
   '0xa4c138bf35b5bc0b':
     friendly_name: balcony_plug
+  '0x54ef441000823aac':
+    friendly_name: doorbell_button
 external_converters:
   - IKEA_VINDRIKTNING_EFEKTA.js
   - IKEA_VINDRIKTNING_EFEKTA_II.js
