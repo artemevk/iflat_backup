@@ -1,4 +1,13 @@
-# balcony:
+balcony:
+  sensor:
+    - platform: template
+      sensors:
+        balcony_temperature:
+          unit_of_measurement: '°C'
+          icon_template: mdi:thermometer
+          device_class: temperature
+          value_template: "{{ state_attr('climate.balcony_thermostat', 'current_temperature') }}"
+          
 
 #   automation:
 #   - id: balcony_right_switch
