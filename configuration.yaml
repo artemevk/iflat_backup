@@ -12,8 +12,8 @@ homeassistant:
 default_config:
 
 # Text to speech
-tts:
-  - platform: google_translate
+# tts:
+#   - platform: google_translate
 
 frontend:
   extra_module_url:

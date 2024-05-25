@@ -7,15 +7,22 @@ balcony:
           icon_template: mdi:thermometer
           device_class: temperature
           value_template: "{{ state_attr('climate.balcony_thermostat', 'current_temperature') }}"
-          
 
-#   automation:
-#   - id: balcony_right_switch
-#     alias: "balcony_right_switch"
-#     trigger:
-#       - platform: state
-#         entity_id: switch.balcony_light_switch_right
-#     action:
-#       - service: light.toggle
-#         entity_id: light.balcony_led_controller
-          
+  automation:
+  - id: balcony_white_light_toggle
+    alias: "balcony_white_light_toggle"
+    trigger:
+      - platform: state
+        entity_id: sensor.living_room_scene_switch_action
+    action:
+      - service: switch.toggle
+        entity_id: switch.balcony_light_switch_right
+
+  - id: balcony_rgb_light_toggle
+    alias: "balcony_rgb_light_toggle"
+    trigger:
+      - platform: state
+        entity_id: sensor.living_room_scene_switch_action
+    action:
+      - service: light.toggle
+        entity_id: switch.balcony_light_switch_right
