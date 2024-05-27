@@ -14,6 +14,10 @@ balcony:
       trigger:
         - platform: state
           entity_id: sensor.living_room_scene_switch_action
+          to: 
+            - 3_single
+            - 3_double
+            - 3_hold
       action:
         - service: switch.toggle
           entity_id: switch.balcony_light_switch_right
@@ -23,6 +27,10 @@ balcony:
       trigger:
         - platform: state
           entity_id: sensor.living_room_scene_switch_action
+          to: 
+            - 4_single
+            - 4_double
+            - 4_hold
       action:
         - service: light.toggle
           entity_id: light.balcony_led_controller

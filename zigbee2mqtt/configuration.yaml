@@ -1,4 +1,5 @@
-homeassistant: true
+homeassistant:
+  legacy_entity_attributes: true
 mqtt:
   server: mqtt://core-mosquitto
   user: mqtt
@@ -9,9 +10,20 @@ frontend:
   port: 8099
 advanced:
   homeassistant_legacy_entity_attributes: false
-  legacy_api: false
-  legacy_availability_payload: false
+  legacy_api: true
+  legacy_availability_payload: true
   log_level: debug
+  log_syslog:
+    app_name: Zigbee2MQTT
+    eol: /n
+    host: localhost
+    localhost: localhost
+    path: /dev/log
+    pid: process.pid
+    port: 514
+    protocol: udp4
+    type: '5424'
+  last_seen: ISO_8601
 device_options:
   legacy: false
 devices:
@@ -55,3 +67,4 @@ external_converters:
   - IKEA_VINDRIKTNING_EFEKTA.js
   - IKEA_VINDRIKTNING_EFEKTA_II.js
   - IKEA_VINDRIKTNING_EFEKTA_III.js
+availability: true
