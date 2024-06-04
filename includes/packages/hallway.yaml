@@ -47,18 +47,41 @@ hallway:
     smartintercom_mode_set:
       alias: Домофон (установка режима)
       sequence:
-      - service: select.select_option
-        entity_id: select.smartintercom_modes
-        data:
-          option: >
-            {% if mode == "normal" %}
-              Не активен
-            {% elif mode == "auto" %}
-              Открывать всегда
-            {% else %}
-              Сброс вызова
-            {% endif %}
+        - service: select.select_option
+          entity_id: select.smartintercom_modes
+          data:
+            option: >
+              {% if mode == "normal" %}
+                Не активен
+              {% elif mode == "auto" %}
+                Открывать всегда
+              {% else %}
+                Сброс вызова
+              {% endif %}
       mode: queued
+
+    call:
+      alias: call
+      sequence:
+        - service: select.select_option
+          target:
+            entity_id: select.siren_melody
+          data:
+            option: "18"
+        - service: select.select_option
+          target:
+            entity_id: select.siren_volume
+          data:
+            option: "medium"
+        # - service: number.set_value
+        #   data:
+        #     value: "8"
+        #   target:
+        #     entity_id: number.siren_duration
+        - service: switch.turn_on
+          target:
+            entity_id: 
+              - switch.siren_alarm
 
   automation:
     - id: 'doorbell_call'
@@ -67,15 +90,16 @@ hallway:
       mode: restart
       trigger:
         - platform: state
-          entity_id:
-            - sensor.doorbell_button_action
+          entity_id: sensor.doorbell_button_action
+          to:
+            - 'single'
+            - 'double'
+            - 'hold'
       condition: []
       action:
-        - service: switch.toggle
+        - service: script.turn_on
           target:
-            entity_id: switch.balcony_light_switch_left
-        - service: light.toggle
-          entity_id: light.balcony_led_controller
+            entity_id: script.call
 
 
     - id: 'smartintercom_accept_call_on'
