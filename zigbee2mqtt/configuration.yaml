@@ -41,8 +41,6 @@ devices:
     friendly_name: fridge
   '0x00158d00047def18':
     friendly_name: server_temperature
-  '0x00124b00246e611a':
-    friendly_name: childrens_room_remote
   '0x00124b00281b0401':
     friendly_name: womens_happines
   '0xb43522fffef9b116':

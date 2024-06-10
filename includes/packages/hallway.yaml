@@ -1,9 +1,8 @@
 hallway:
-
   timer:
     smartintercom_wait:
-      name: 'Домофон автовыключение открытия'
-      duration: '02:00:00'
+      name: "Домофон автовыключение открытия"
+      duration: "02:00:00"
 
   sensor:
     - platform: template
@@ -33,15 +32,15 @@ hallway:
             {% endif %}
 
   template:
-  - binary_sensor:
-    - name: "smartintercom state"
-      device_class: "door"
-      state: >
-        {% if is_state("switch.smartintercom_accept_call", "on") or is_state("select.smartintercom_modes", "Открывать всегда") %}
-          on
-        {% else %}
-          off
-        {% endif %}
+    - binary_sensor:
+        - name: "smartintercom state"
+          device_class: "door"
+          state: >
+            {% if is_state("switch.smartintercom_accept_call", "on") or is_state("select.smartintercom_modes", "Открывать всегда") %}
+              on
+            {% else %}
+              off
+            {% endif %}
 
   script:
     smartintercom_mode_set:
@@ -63,28 +62,31 @@ hallway:
     call:
       alias: call
       sequence:
-        - service: select.select_option
-          target:
-            entity_id: select.siren_melody
-          data:
-            option: "18"
-        - service: select.select_option
-          target:
-            entity_id: select.siren_volume
-          data:
-            option: "medium"
-        # - service: number.set_value
-        #   data:
-        #     value: "8"
-        #   target:
-        #     entity_id: number.siren_duration
+        - parallel:
+            - service: select.select_option
+              target:
+                entity_id: select.siren_melody
+              data:
+                option: "18"
+
+            - service: select.select_option
+              target:
+                entity_id: select.siren_volume
+              data:
+                option: "medium"
+            - service: number.set_value
+              data:
+                value: 2
+              target:
+                entity_id: number.siren_duration
+        - delay: "00:00:00.5"
         - service: switch.turn_on
           target:
-            entity_id: 
+            entity_id:
               - switch.siren_alarm
 
   automation:
-    - id: 'doorbell_call'
+    - id: "doorbell_call"
       alias: Дверной звонок
       description: ""
       mode: restart
@@ -92,63 +94,62 @@ hallway:
         - platform: state
           entity_id: sensor.doorbell_button_action
           to:
-            - 'single'
-            - 'double'
-            - 'hold'
+            - "single"
+            - "double"
+            - "hold"
       condition: []
       action:
         - service: script.turn_on
           target:
             entity_id: script.call
 
-
-    - id: 'smartintercom_accept_call_on'
+    - id: "smartintercom_accept_call_on"
       alias: Домофон (включается accept_call)
-      description: ''
+      description: ""
       trigger:
-      - platform: state
-        entity_id: switch.smartintercom_accept_call
-        from: 'off'
-        to: 'on'
-      condition: []
-      action:
-      - service: timer.start
-        entity_id: timer.smartintercom_wait
-      mode: single
-
-    - id: 'smartintercom_accept_call_off'
-      alias: Домофон (выключается accept_call)
-      description: ''
-      trigger:
-      - platform: state
-        entity_id: switch.smartintercom_accept_call
-        from: 'on'
-        to: 'off'
-      condition: []
-      action:
-      - service: timer.cancel
-        entity_id: timer.smartintercom_wait
-      mode: single
-
-    - id: 'smartintercom_timer_finished'
-      alias: Домофон (обработчик таймера accept_call)
-      description: ''
-      trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.smartintercom_wait
-      condition:
-      - condition: state
-        entity_id: switch.smartintercom_accept_call
-        state: 'on'
-      action:
-      - service: switch.turn_off
-        target:
+        - platform: state
           entity_id: switch.smartintercom_accept_call
+          from: "off"
+          to: "on"
+      condition: []
+      action:
+        - service: timer.start
+          entity_id: timer.smartintercom_wait
       mode: single
 
-    - id: 'smartintercom_call'
+    - id: "smartintercom_accept_call_off"
+      alias: Домофон (выключается accept_call)
+      description: ""
+      trigger:
+        - platform: state
+          entity_id: switch.smartintercom_accept_call
+          from: "on"
+          to: "off"
+      condition: []
+      action:
+        - service: timer.cancel
+          entity_id: timer.smartintercom_wait
+      mode: single
+
+    - id: "smartintercom_timer_finished"
+      alias: Домофон (обработчик таймера accept_call)
+      description: ""
+      trigger:
+        - platform: event
+          event_type: timer.finished
+          event_data:
+            entity_id: timer.smartintercom_wait
+      condition:
+        - condition: state
+          entity_id: switch.smartintercom_accept_call
+          state: "on"
+      action:
+        - service: switch.turn_off
+          target:
+            entity_id: switch.smartintercom_accept_call
+      mode: single
+
+    - id: "smartintercom_call"
       alias: SmartIntercom Call
       description: ""
       trigger:
