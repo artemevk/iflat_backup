@@ -2,12 +2,12 @@ homeassistant:
   name: iFlat
   latitude: !secret latitude_coord
   longitude: !secret longitude_coord
-#   elevation: 211
+  #   elevation: 211
   unit_system: metric
   country: RU
   time_zone: Europe/Moscow
   packages: !include_dir_merge_named includes/packages
-  
+
 # Loads default set of integrations. Do not remove.
 default_config:
 
@@ -17,21 +17,21 @@ default_config:
 
 frontend:
   extra_module_url:
-    - /hacsfiles/ha-yandex-icons/yandex-icons.js 
+    - /hacsfiles/ha-yandex-icons/yandex-icons.js
 
 lovelace:
   resources:
-  - url: /local/mini-media-player-bundle.js?v=1.16.9
-    type: module
-  - url: /local/mini-graph-card-bundle.js?v=0.12.1
-    type: module
-  - url: /webrtc/webrtc-camera.js
-    type: module
+    - url: /local/mini-media-player-bundle.js?v=1.16.9
+      type: module
+    - url: /local/mini-graph-card-bundle.js?v=0.12.1
+      type: module
+    - url: /webrtc/webrtc-camera.js
+      type: module
 
 alarm_control_panel:
   - platform: manual
     name: Home Alarm
-    # code: "1234"
+    code_arm_required: false
     arming_time: 30
     delay_time: 20
     trigger_time: 4
@@ -87,7 +87,7 @@ notify:
   - platform: telegram
     name: tlg_user5_id
     chat_id: !secret tlg_user5_id
-  - platform: group 
+  - platform: group
     name: all_telegram
     services:
       - service: tlg_user1_id
@@ -95,13 +95,13 @@ notify:
       - service: tlg_user3_id
       - service: tlg_user4_id
       - service: tlg_user5_id
-  - platform: group 
+  - platform: group
     name: mariya_konstantin_ivan
     services:
       - service: tlg_user1_id
       - service: tlg_user2_id
       - service: tlg_user5_id
-      
+
 shell_command:
   push_to_github: bash /config/ha_gitpush.sh
 
@@ -126,7 +126,7 @@ yandex_smart_home:
           set_mode:
             service: script.smartintercom_mode_set
             data:
-              mode: '{{ mode }}'
+              mode: "{{ mode }}"
       custom_toggles:
         controls_locked:
           state_entity_id: sensor.smartintercom_accept_call_invert
