@@ -7,3 +7,19 @@
     - light.yeelight_s1_child_4
     - light.yeelight_s1_child_5
     - light.yeelight_s1_child_6
+
+- platform: switch
+  name: balcony_light_switch_right
+  entity_id: switch.balcony_light_switch_right
+
+- platform: group
+  name: "all"
+  entities:
+    - light.yeelight_s1_child_1
+    - light.yeelight_s1_child_2
+    - light.yeelight_s1_child_3
+    - light.yeelight_s1_child_4
+    - light.yeelight_s1_child_5
+    - light.yeelight_s1_child_6
+    - light.balcony_led_controller
+    - light.balcony_light_switch_right

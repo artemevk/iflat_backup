@@ -50,6 +50,7 @@ recorder: !include includes/recorder.yaml
 script: !include scripts.yaml
 sensor: !include_dir_merge_list includes/sensor/
 # yeelight: !include includes/yeelight.yaml
+template: !include includes/template.yaml
 
 command_line:
   - sensor:

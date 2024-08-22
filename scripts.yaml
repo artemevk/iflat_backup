@@ -1,0 +1,5 @@
+light_turn_off_all:
+  sequence:
+    - action: light.turn_off
+      target:
+        entity_id: light.all

@@ -109,41 +109,41 @@ childrens_room:
         data:
           entity_id: input_select.scenes
 
-    - id: childrens_room_reset_resolution_auto_mode_light
-      alias: childrens_room_reset_resolution_auto_mode_light
-      # initial_state: true
-      trigger:
-        - platform: time
-          at: "15:32:00"
-        - platform: state
-          entity_id: sensor.childrens_room_remote_action
-          to: "button_5_single"
-      condition:
-        - condition: state
-          entity_id: input_boolean.childrens_room_resolution_auto_mode_light
-          state: "off"
-      action:
-        - service: input_boolean.turn_on
-          target:
-            entity_id: input_boolean.childrens_room_resolution_auto_mode_light
-        - service: script.blink_childrens_room_light
+    # - id: childrens_room_reset_resolution_auto_mode_light
+    #   alias: childrens_room_reset_resolution_auto_mode_light
+    #   # initial_state: true
+    #   trigger:
+    #     - platform: time
+    #       at: "15:32:00"
+    #     - platform: state
+    #       entity_id: sensor.childrens_room_remote_action
+    #       to: "button_5_single"
+    #   condition:
+    #     - condition: state
+    #       entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+    #       state: "off"
+    #   action:
+    #     - service: input_boolean.turn_on
+    #       target:
+    #         entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+    #     - service: script.blink_childrens_room_light
 
-    - id: childrens_room_prohibit_auto_mode_light
-      alias: Выключить автоматический режим управления светом
-      trigger:
-        - platform: state
-          entity_id: sensor.childrens_room_remote_action
-          to: "button_1_single"
-      condition:
-        - condition: state
-          entity_id: input_boolean.childrens_room_resolution_auto_mode_light
-          state: "on"
-      action:
-        - service: input_boolean.turn_off
-          target:
-            entity_id: input_boolean.childrens_room_resolution_auto_mode_light
-        - service: script.blink_childrens_room_light
-        - service: script.blink_childrens_room_light
+    # - id: childrens_room_prohibit_auto_mode_light
+    #   alias: Выключить автоматический режим управления светом
+    #   trigger:
+    #     - platform: state
+    #       entity_id: sensor.childrens_room_remote_action
+    #       to: "button_1_single"
+    #   condition:
+    #     - condition: state
+    #       entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+    #       state: "on"
+    #   action:
+    #     - service: input_boolean.turn_off
+    #       target:
+    #         entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+    #     - service: script.blink_childrens_room_light
+    #     - service: script.blink_childrens_room_light
 
     - id: childrens_room_light_on
       alias: childrens_room_light_on

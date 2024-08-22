@@ -4,6 +4,7 @@ mqtt:
   server: mqtt://core-mosquitto
   user: mqtt
   password: mqtt
+  base_topic: zigbee2mqtt
 serial:
   port: /dev/ttyUSB0
 frontend:
@@ -63,8 +64,6 @@ devices:
     friendly_name: doorbell_button
   '0xa4c1382ddbf3409f':
     friendly_name: siren
-  '0x00124b00246e611a':
-    friendly_name: childrens_room_remote
 external_converters:
   - IKEA_VINDRIKTNING_EFEKTA.js
   - IKEA_VINDRIKTNING_EFEKTA_II.js

@@ -1,0 +1,8 @@
+binary_sensor:
+  - name: "any_light_on"
+    state: >
+      {% set domain = 'light' %}
+      {% set state = 'on' %}
+      {{ states[domain] | selectattr('state','eq', state) | list | count > 0 }}
+    device_class: light
+    icon: mdi:lightbulb-group

@@ -14,23 +14,60 @@ balcony:
       trigger:
         - platform: state
           entity_id: sensor.living_room_scene_switch_action
-          to: 
+          to:
             - 3_single
             - 3_double
             - 3_hold
       action:
-        - service: switch.toggle
-          entity_id: switch.balcony_light_switch_right
+        - service: light.toggle
+          entity_id: light.balcony_light_switch_right
 
     - id: balcony_rgb_light_toggle
       alias: "balcony_rgb_light_toggle"
       trigger:
         - platform: state
           entity_id: sensor.living_room_scene_switch_action
-          to: 
+          to:
             - 4_single
             - 4_double
             - 4_hold
       action:
         - service: light.toggle
           entity_id: light.balcony_led_controller
+
+    - id: balcony_light_on
+      alias: "balcony_light_on"
+      trigger:
+        - platform: state
+          entity_id: binary_sensor.balcony_motion_occupancy
+          to: "on"
+      action:
+        - service: light.turn_on
+          entity_id: light.balcony_light_switch_right
+
+    - id: balcony_light_off
+      alias: "balcony_light_off"
+      trigger:
+        - platform: state
+          entity_id: binary_sensor.balcony_motion_occupancy
+          to: "off"
+          for:
+            minutes: 5
+        - platform: state
+          entity_id: light.balcony_light_switch_right
+          to: "on"
+          for:
+            minutes: 15
+      condition:
+        - condition: state
+          entity_id: light.balcony_light_switch_right
+          state: "on"
+        - condition: state
+          entity_id: binary_sensor.balcony_motion_occupancy
+          state: "off"
+          for:
+            minutes: 4
+      action:
+        service: light.turn_off
+        target:
+          entity_id: light.balcony_light_switch_right

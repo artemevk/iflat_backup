@@ -26,6 +26,7 @@
   trigger:
     - platform: state
       entity_id: alarm_control_panel.home_alarm
+      not_from: "arming"
       to: "disarmed"
   action:
     - service: notify.mariya_konstantin_ivan

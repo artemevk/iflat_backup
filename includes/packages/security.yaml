@@ -1,6 +1,5 @@
 security:
   script:
-
     security_activate:
       sequence:
         - service: siren.turn_on
@@ -43,7 +42,6 @@ security:
       #         target:
       #           entity_id: switch.siren_alarm
 
-
     # - alias: 'security activate'
     #   service: light.turn_on
     #   target:
@@ -52,3 +50,60 @@ security:
     #     brightness: 100
     # select.siren_volume high
     # number.siren_duration
+
+  automation:
+    - id: "automatic arming"
+      alias: "automatic arming"
+      trigger:
+        - platform: template
+          value_template: "{{ states.zone.home.state | int == 0 }}"
+      condition:
+        not:
+          - condition: state
+            entity_id: alarm_control_panel.home_alarm
+            state: "armed_away"
+      action:
+        - service: alarm_control_panel.alarm_arm_away
+          target:
+            entity_id: alarm_control_panel.home_alarm
+        - service: script.turn_on
+          entity_id: script.light_turn_off_all
+
+    - id: "automatic disarming"
+      alias: "automatic disarming"
+      trigger:
+        - platform: template
+          value_template: "{{ states.zone.home.state | int > 0 }}"
+      condition:
+        not:
+          - condition: state
+            entity_id: alarm_control_panel.home_alarm
+            state: "disarmed"
+      action:
+        - service: alarm_control_panel.alarm_disarm
+          target:
+            entity_id: alarm_control_panel.home_alarm
+
+    - id: "alarm notify"
+      alias: "alarm notify"
+      trigger:
+        - platform: state
+          entity_id: alarm_control_panel.home_alarm
+          from:
+            - "armed_away"
+            - "disarmed"
+          to:
+            - "armed_away"
+            - "disarmed"
+      action:
+        - service: notify.mobile_app_artemevk
+          data:
+            title: "Охрана"
+            message: |
+              {% if states('alarm_control_panel.home_alarm') == 'disarmed' %}
+                Квартира снята с охраны.
+              {% elif states('alarm_control_panel.home_alarm') == 'armed_away' %}
+                Квартира поставлена на охрану.
+              {% endif %}
+            data:
+              url: "/lovelace/main"
