@@ -10,26 +10,6 @@ telegramm:
   sensor:
     - platform: template
       sensors:
-        # unavailable_now_light:
-        #   friendly_name: "Всего недоступных светильников - "
-        #   value_template: "{{states.light | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
-        #   icon_template: mdi:counter
-
-        # unavailable_now_switch:
-        #   friendly_name: "Всего недоступных реле - "
-        #   value_template: "{{states.switch | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
-        #   icon_template: mdi:counter
-
-        # unavailable_now_sensor:
-        #   friendly_name: "Всего недоступных сенсоров - "
-        #   value_template: "{{states.sensor | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
-        #   icon_template: mdi:counter
-
-        # unavailable_now_binary_sensor:
-        #   friendly_name: "Всего недоступных бинарных сенсоров - "
-        #   value_template: "{{states.binary_sensor | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
-        #   icon_template: mdi:counter
-
         batteries_states_msg:
           value_template: |
             {{"\U0001F50B"}}Батарейки:{% for entity_id in state_attr('sensor.min_batteries_state', 'entity_id') %}{% set friendly_name = entity_id.split('.')[1].split('_bat')[0] %}{% set value = states(entity_id, with_unit=True) %}
@@ -57,7 +37,7 @@ telegramm:
             message: "Добро пожаловать в главное меню. Выберите действие:"
             disable_notification: true
             inline_keyboard:
-              - "{{'\U0001F4CB'}} Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
               - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
 
     - alias: "Telegram bot main menu"
@@ -77,7 +57,7 @@ telegramm:
             message: "Добро пожаловать в главное меню. Выберите действие:"
             disable_notification: true
             inline_keyboard:
-              - "{{'\U0001F4CB'}} Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
               - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
 
     - alias: "Telegram bot main menu from msg"
@@ -93,7 +73,7 @@ telegramm:
             message: "Добро пожаловать в главное меню. Выберите действие:"
             disable_notification: true
             inline_keyboard:
-              - "{{'\U0001F4CB'}} Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
               - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
 
     - id: Отчет при запуске системы
@@ -111,7 +91,7 @@ telegramm:
         - service: timer.start
           target:
             entity_id: timer.1m
-        # Задержка и отправка полного отчета через минуту
+        # Задержка и отправка полного отчета
         - delay: 00:02:00
         - service: notify.tlg_user1_id
           data:
@@ -128,7 +108,7 @@ telegramm:
             message: "Добро пожаловать в главное меню. Выберите действие:"
             data:
               inline_keyboard:
-                - "{{'\U0001F4CB'}} Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+                - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
                 - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
 
     # Отчет о системе по запросу
@@ -155,7 +135,7 @@ telegramm:
               {{ states('sensor.batteries_states_msg') }}
             disable_notification: true
             inline_keyboard:
-              - "{{'\U0001F4CB'}} Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
               - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
 
     # Отчет при потере объектов
@@ -165,6 +145,7 @@ telegramm:
       trigger:
         - platform: state # при потере объектов
           entity_id: sensor.unavailable_objects
+          for: "00:03:00"
       condition:
         condition: and
         conditions:
@@ -175,11 +156,11 @@ telegramm:
           data_template:
             target: !secret tlg_user1_id
             message: |
-              {{"\U0000203C"}} Обнаружена новая неисправность
+              {{"\U0000203C"}}Обнаружена новая неисправность
               {{ states('sensor.report_msg') }}
             data:
               inline_keyboard:
-                - "{{'\U0001F4CB'}} Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+                - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
                 - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
 
     - id: Отправить отчет о состоянии батареек
@@ -214,7 +195,7 @@ telegramm:
               siren - 2xCR123A
               door bell button - CR2032
             inline_keyboard:
-              - "{{'\U0001F4CB'}} Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
               - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
 
     - id: Автоматический отчет о состоянии батареек
@@ -243,7 +224,7 @@ telegramm:
               siren - 2xCR123A
               door bell button - CR2032
             inline_keyboard:
-              - "{{'\U0001F4CB'}} Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
               - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
 
     # Сигнализация
@@ -276,7 +257,7 @@ telegramm:
             disable_notification: true
             inline_keyboard:
               - "Вкл.:/turn_on_alarm, Выкл.:/turn_off_alarm"
-              - "{{'\U0001F4D6'}} Главное меню:/mm, {{'\U0001F504'}} Обновить:/alarm_menu"
+              - "{{'\U0001F4D6'}} Главное меню:/mm, {{'\U0001F504'}}Обновить:/alarm_menu"
 
     - id: turn_on_alarm
       alias: turn_on_alarm
@@ -376,4 +357,4 @@ telegramm:
                 {{"\U0001F534"}}
                 {% endif %}
                 Mute:/smartintercom_mute'
-              - "{{'\U0001F4D6'}} Главное меню:/mm, {{'\U0001F504'}} Обновить:/smartintercom"
+              - "{{'\U0001F4D6'}} Главное меню:/mm, {{'\U0001F504'}}Обновить:/smartintercom"
