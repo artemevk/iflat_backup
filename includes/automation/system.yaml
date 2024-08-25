@@ -1,4 +1,4 @@
-- id: Сжатие базы
+- id: "purge database"
   alias: 00_purge_everyday
   initial_state: true
   trigger:
@@ -7,7 +7,7 @@
   action:
     - service: recorder.purge
       data:
-          keep_days: 60
+          keep_days: 3
           repack: true
           
 - id: l1k3
