@@ -105,7 +105,6 @@ notify:
 
 shell_command:
   push_to_github: bash /config/ha_gitpush.sh
-
 yandex_smart_home:
   notifier:
     - oauth_token: !secret oauth_token

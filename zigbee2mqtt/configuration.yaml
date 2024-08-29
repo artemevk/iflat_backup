@@ -13,7 +13,7 @@ advanced:
   homeassistant_legacy_entity_attributes: false
   legacy_api: true
   legacy_availability_payload: true
-  log_level: debug
+  log_level: warning
   log_syslog:
     app_name: Zigbee2MQTT
     eol: /n
