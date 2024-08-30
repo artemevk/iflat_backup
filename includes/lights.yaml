@@ -1,5 +1,5 @@
 - platform: group
-  name: "Childrens_room_ceiling_lamp"
+  name: "childrens_room_ceiling_lamp"
   entities:
     - light.yeelight_s1_child_1
     - light.yeelight_s1_child_2

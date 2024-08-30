@@ -41,6 +41,10 @@ balcony:
         - platform: state
           entity_id: binary_sensor.balcony_motion_occupancy
           to: "on"
+      condition:
+        - condition: state
+          entity_id: sun.sun
+          state: "below_horizon"
       action:
         - service: light.turn_on
           entity_id: light.balcony_light_switch_right
