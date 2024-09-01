@@ -52,8 +52,6 @@ devices:
     friendly_name: balcony_motion
   '0x00124b002a619af3':
     friendly_name: ikea_vindriktning
-  '0xa4c1387aa1938b1d':
-    friendly_name: balcony_thermostat
   '0xa4c138440dd46304':
     friendly_name: balcony_led_controller
   '0xa4c138b5af7ff183':
@@ -64,6 +62,8 @@ devices:
     friendly_name: doorbell_button
   '0xa4c1382ddbf3409f':
     friendly_name: siren
+  '0xa4c138508f0d809b':
+    friendly_name: balcony_thermostat
 external_converters:
   - IKEA_VINDRIKTNING_EFEKTA.js
   - IKEA_VINDRIKTNING_EFEKTA_II.js

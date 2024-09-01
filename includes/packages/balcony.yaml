@@ -8,6 +8,11 @@ balcony:
           device_class: temperature
           value_template: "{{ state_attr('climate.balcony_thermostat', 'current_temperature') }}"
 
+  input_boolean:
+    balcony_auto_mode_light:
+      #   initial: true
+      icon: mdi:lightbulb-auto
+
   automation:
     - id: balcony_white_light_toggle
       alias: "balcony_white_light_toggle"
@@ -35,6 +40,21 @@ balcony:
         - service: light.toggle
           entity_id: light.balcony_led_controller
 
+    - id: balcony_auto_mode_light_init
+      alias: balcony_auto_mode_light_init
+      # initial_state: true
+      trigger:
+        - platform: time
+          at: "12:32:00"
+      condition:
+        - condition: state
+          entity_id: input_boolean.balcony_auto_mode_light
+          state: "off"
+      action:
+        - service: input_boolean.turn_on
+          target:
+            entity_id: input_boolean.balcony_auto_mode_light
+
     - id: balcony_light_on
       alias: "balcony_light_on"
       trigger:
@@ -45,6 +65,9 @@ balcony:
         - condition: state
           entity_id: sun.sun
           state: "below_horizon"
+        - condition: state
+          entity_id: input_boolean.balcony_auto_mode_light
+          state: "on"
       action:
         - service: light.turn_on
           entity_id: light.balcony_light_switch_right
@@ -71,6 +94,9 @@ balcony:
           state: "off"
           for:
             minutes: 4
+        - condition: state
+          entity_id: input_boolean.balcony_auto_mode_light
+          state: "on"
       action:
         service: light.turn_off
         target:
