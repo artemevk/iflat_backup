@@ -6,3 +6,5 @@ binary_sensor:
       {{ states[domain] | selectattr('state','eq', state) | list | count > 0 }}
     device_class: light
     icon: mdi:lightbulb-group
+
+    

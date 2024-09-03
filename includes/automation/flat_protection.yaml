@@ -1,7 +1,13 @@
-- alias: 'Trigger alarm while armed away'
+- alias: "Trigger alarm while armed away"
   trigger:
     - platform: state
       entity_id: binary_sensor.door_sensor_contact
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.tapo_c110_43b0_motion_alarm
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.tapo_c110_43b0_noise
       to: "on"
   condition:
     - condition: state
@@ -12,7 +18,7 @@
     target:
       entity_id: alarm_control_panel.home_alarm
 
-- alias: 'Send notification when alarm triggered'
+- alias: "Send notification when alarm triggered"
   trigger:
     - platform: state
       entity_id: alarm_control_panel.home_alarm
@@ -22,7 +28,7 @@
       data:
         message: "ВНИМАНИЕ! Сработала сигнализация!"
 
-- alias: 'Send notification when alarm is Disarmed'
+- alias: "Send notification when alarm is Disarmed"
   trigger:
     - platform: state
       entity_id: alarm_control_panel.home_alarm
@@ -32,8 +38,17 @@
     - service: notify.mariya_konstantin_ivan
       data:
         message: "ВНИМАНИЕ! Сигнализация отключена."
+    - service: switch.turn_on
+      entity_id: switch.tapo_c110_43b0_privacy
+    - service: switch.turn_off
+      entity_id: switch.tapo_c110_43b0_notifications
+    - action: select.select_option
+      target:
+        entity_id: select.tapo_c110_43b0_automatic_alarm
+      data:
+        option: "off"
 
-- alias: 'Send notification when alarm is in pending status'
+- alias: "Send notification when alarm is in pending status"
   trigger:
     - platform: state
       entity_id: alarm_control_panel.home_alarm
@@ -43,7 +58,7 @@
       data:
         message: "ВНИМАНИЕ! Сигнализация перешла в режим ожидания."
 
-- alias: 'Send notification when alarm is Armed in Away mode'
+- alias: "Send notification when alarm is Armed in Away mode"
   trigger:
     - platform: state
       entity_id: alarm_control_panel.home_alarm
@@ -52,8 +67,17 @@
     - service: notify.mariya_konstantin_ivan
       data:
         message: "ВНИМАНИЕ! Сигнализация активирована."
+    - service: switch.turn_off
+      entity_id: switch.tapo_c110_43b0_privacy
+    - service: switch.turn_on
+      entity_id: switch.tapo_c110_43b0_notifications
+    - action: select.select_option
+      target:
+        entity_id: select.tapo_c110_43b0_automatic_alarm
+      data:
+        option: "both"
 
-- alias: 'Send notification when alarm is Armed in Home mode'
+- alias: "Send notification when alarm is Armed in Home mode"
   trigger:
     - platform: state
       entity_id: alarm_control_panel.home_alarm
