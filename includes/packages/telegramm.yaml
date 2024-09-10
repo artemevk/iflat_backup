@@ -249,9 +249,9 @@ telegramm:
           data_template:
             target: "{{ trigger.event.data.user_id }}"
             message: |
-              {{ "\n" -}}{{"\U0001F6A8"}} Сигнализация {% if states.alarm_control_panel.home_alarm.state == 'disarmed' %}{{"выкл."}}
-              {% elif states.alarm_control_panel.home_alarm.state == 'armed' %}{{"вкл."}}
-              {% else %}{{ states.alarm_control_panel.home_alarm.state }}
+              {{ "\n" -}}{{"\U0001F6A8"}} Сигнализация {% if states('alarm_control_panel.home_alarm') == 'disarmed' %}{{"выкл."}}
+              {% elif states('alarm_control_panel.home_alarm') == 'armed' %}{{"вкл."}}
+              {% else %}{{ states('alarm_control_panel.home_alarm') }}
               {% endif %}
               {{ "\n" -}}
             disable_notification: true
@@ -287,7 +287,7 @@ telegramm:
             command: "/turn_off_alarm"
       condition:
         condition: template
-        value_template: '{{ states.alarm_control_panel.home_alarm != "disarmed" }}'
+        value_template: '{{ states("alarm_control_panel.home_alarm") != "disarmed" }}'
       action:
         service: alarm_control_panel.alarm_disarm
         data: {}

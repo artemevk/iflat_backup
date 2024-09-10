@@ -18,6 +18,7 @@ default_config:
 frontend:
   extra_module_url:
     - /hacsfiles/ha-yandex-icons/yandex-icons.js
+    - /local/card-mod.js
 
 lovelace:
   resources:
@@ -26,6 +27,8 @@ lovelace:
     - url: /local/mini-graph-card-bundle.js?v=0.12.1
       type: module
     - url: /webrtc/webrtc-camera.js
+      type: module
+    - url: /local/custom-ui.js
       type: module
 
 alarm_control_panel:
