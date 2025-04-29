@@ -62,7 +62,7 @@
         "last_seen": "2025-04-29T09:57:10.195Z"
     },
     "0xa4c138507fc3da4d": {
-        "energy": 57.16,
+        "energy": 57.17,
         "voltage": 227,
         "state": "ON",
         "power_outage_memory": "restore",
@@ -86,7 +86,7 @@
         "last_seen": "2025-04-29T08:57:27.062Z"
     },
     "0x00124b002a61a44b": {
-        "co2": 724,
+        "co2": 719,
         "auto_brightness": "ON",
         "forced_recalibration": "OFF",
         "factory_reset_co2": "OFF",
@@ -96,9 +96,9 @@
         "high_gas": 2000,
         "low_gas": 400,
         "enable_gas": "OFF",
-        "temperature_1": 24.32,
+        "temperature_1": 24.29,
         "temperature_offset": 0.1,
-        "humidity_1": 29.26,
+        "humidity_1": 29.32,
         "humidity_offset": 1,
         "illuminance": 1,
         "night_onoff_backlight": "OFF",
@@ -132,11 +132,11 @@
         "humidity": 0,
         "pm25_1": 10,
         "linkquality": 69,
-        "pm25": 29,
+        "pm25": 28,
         "temperature_2": 0,
         "humidity_2": 0,
-        "pm1": 1715,
-        "pm10": 155,
+        "pm1": 1712,
+        "pm10": 174,
         "co2": 0,
         "voc_raw_data": 0,
         "voc_index": 100,
@@ -163,7 +163,7 @@
         "last_seen": "2025-04-29T10:21:20.343Z"
     },
     "0xa4c138bf35b5bc0b": {
-        "voltage": 229,
+        "voltage": 228,
         "energy": 49.71,
         "state": "OFF",
         "power": 0,
@@ -188,7 +188,7 @@
         "max_temperature_limit": 28,
         "max_temperature": 35,
         "deadzone_temperature": 1,
-        "local_temperature": 23,
+        "local_temperature": 22.5,
         "min_temperature_limit": 5,
         "local_temperature_calibration": 0,
         "heat": "OFF",
