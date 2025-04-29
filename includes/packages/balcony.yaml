@@ -1,0 +1,128 @@
+balcony:
+  input_boolean:
+    balcony_auto_mode_light:
+      #   initial: true
+      icon: mdi:lightbulb-auto
+
+  automation:
+    - id: balcony_white_light_toggle
+      alias: "balcony_white_light_toggle"
+      triggers:
+        - domain: mqtt
+          device_id: 3153a1e8b94626dd8c88fafc91f23faa
+          type: action
+          subtype: 3_single
+          trigger: device
+        - domain: mqtt
+          device_id: 3153a1e8b94626dd8c88fafc91f23faa
+          type: action
+          subtype: 3_double
+          trigger: device
+        - domain: mqtt
+          device_id: 3153a1e8b94626dd8c88fafc91f23faa
+          type: action
+          subtype: 3_hold
+          trigger: device
+      action:
+        - service: light.toggle
+          entity_id: light.balcony_one_bulb
+
+    - id: balcony_rgb_light_toggle
+      alias: "balcony_rgb_light_toggle"
+      triggers:
+        - domain: mqtt
+          device_id: 3153a1e8b94626dd8c88fafc91f23faa
+          type: action
+          subtype: 4_single
+          trigger: device
+        - domain: mqtt
+          device_id: 3153a1e8b94626dd8c88fafc91f23faa
+          type: action
+          subtype: 4_double
+          trigger: device
+        - domain: mqtt
+          device_id: 3153a1e8b94626dd8c88fafc91f23faa
+          type: action
+          subtype: 4_hold
+          trigger: device
+      action:
+        - service: light.toggle
+          entity_id: light.balcony_two_bulbs
+
+    - id: balcony_auto_mode_light_init
+      alias: balcony_auto_mode_light_init
+      # initial_state: true
+      trigger:
+        - platform: time
+          at: "12:32:00"
+      condition:
+        - condition: state
+          entity_id: input_boolean.balcony_auto_mode_light
+          state: "off"
+      action:
+        - service: input_boolean.turn_on
+          target:
+            entity_id: input_boolean.balcony_auto_mode_light
+
+    - id: balcony_light_on
+      alias: "balcony_light_on"
+      trigger:
+        - platform: state
+          entity_id: binary_sensor.balcony_motion_occupancy
+          to: "on"
+      conditions:
+        - condition: and
+          conditions:
+            - condition: template
+              value_template: "{{ state_attr('sun.sun', 'elevation') < 0 }}"
+            - condition: state
+              entity_id: input_boolean.balcony_auto_mode_light
+              state: "on"
+      actions:
+        - action: light.turn_on
+          target:
+            entity_id:
+              - light.balcony_one_bulb
+              - light.balcony_two_bulbs
+
+    - id: balcony_light_off
+      alias: "balcony_light_off"
+      triggers:
+        - trigger: state
+          entity_id:
+            - binary_sensor.balcony_motion_occupancy
+          to: "off"
+          for:
+            minutes: 5
+        - trigger: state
+          entity_id:
+            - light.balcony_one_bulb
+            - light.balcony_two_bulbs
+          to: "on"
+          for:
+            minutes: 15
+      conditions:
+        - condition: and
+          conditions:
+            - condition: state
+              entity_id: binary_sensor.balcony_motion_occupancy
+              state: "off"
+              for:
+                minutes: 4
+            - condition: state
+              entity_id: input_boolean.balcony_auto_mode_light
+              state: "on"
+            - condition: or
+              conditions:
+                - condition: state
+                  entity_id: light.balcony_one_bulb
+                  state: "on"
+                - condition: state
+                  entity_id: light.balcony_two_bulbs
+                  state: "on"
+      actions:
+        - action: light.turn_off
+          target:
+            entity_id:
+              - light.balcony_one_bulb
+              - light.balcony_two_bulbs

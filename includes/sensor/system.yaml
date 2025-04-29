@@ -1,0 +1,124 @@
+- platform: template
+  sensors:
+    unavailable_now_light:
+      friendly_name: "Недоступно светильников"
+      value_template: "{{states.light | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+      icon_template: mdi:counter
+
+    unavailable_now_switch:
+      friendly_name: "Недоступно реле"
+      value_template: "{{states.switch | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+      icon_template: mdi:counter
+
+    unavailable_now_sensor:
+      friendly_name: "Недоступно сенсоров"
+      value_template: "{{states.sensor | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+      icon_template: mdi:counter
+
+    unavailable_now_binary_sensor:
+      friendly_name: "Недоступно бинарных сенсоров"
+      value_template: "{{states.binary_sensor | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
+      icon_template: mdi:counter
+
+    # unavailable_objects:
+    #   friendly_name: "Недоступно объектов"
+    #   value_template: >
+    #     {{ int(states('sensor.unavailable_now_light')) +
+    #        int(states('sensor.unavailable_now_switch')) +
+    #        int(states('sensor.unavailable_now_sensor')) +
+    #        int(states('sensor.unavailable_now_binary_sensor')) }}
+    #   icon_template: >
+    #     {% if int(states('sensor.unavailable_now_light')) +
+    #        int(states('sensor.unavailable_now_switch')) +
+    #        int(states('sensor.unavailable_now_sensor')) +
+    #        int(states('sensor.unavailable_now_binary_sensor')) == 0 %}
+    #       mdi:thumb-up
+    #     {% else %}
+    #       mdi:thumb-down
+    #     {% endif %}
+
+# Объем БД
+- platform: sql
+  db_url: !secret db_link
+  queries:
+    - name: maria_db
+      query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 2) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
+      column: "value"
+      unit_of_measurement: MB
+
+# Время с последней перезагрузки
+- platform: template
+  sensors:
+    last_boot_custom:
+      friendly_name: "Последняя перезагрузка"
+      entity_id:
+        - sensor.time
+      value_template: >
+        {% set uptime = as_timestamp (now()) - as_timestamp(states.sensor.system_monitor_last_boot.state) | int %}
+        {% set minutes = (( uptime % 3600) / 60) | int %}
+        {% set hours = ((uptime % 86400) / 3600) | int %}
+        {% set days = (uptime / 86400) | int %}
+          {% if uptime < 1 %}
+            Меньше минуты
+          {% else %}
+            {% if days > 0 %}
+              {{ days }} д.
+            {% endif %}
+            {% if hours > 0 %}
+              {% if days > 0 %}
+                {{ ' ' }}
+              {% endif %}
+              {{ hours }} ч.
+            {% endif %}
+            {% if minutes > 0 %}
+              {% if days > 0 or hours > 0 %}
+                {{ ' ' }}
+              {% endif %}
+                {{ minutes }} мин.
+            {% endif %}
+          {% endif %}
+      icon_template: mdi:clock
+
+    uptime_custom:
+      friendly_name: "HA онлайн"
+      value_template: >
+        {% set uptime = (as_timestamp(now()) - as_timestamp(states.sensor.uptime.state)) / 60 | int %}
+        {% set minutes = (( uptime % 60) / 1) | int %}
+        {% set hours = ((uptime % 1440) / 60) | int %}
+        {% set days = (uptime / 1440) | int %}
+          {% if uptime < 1 %}
+            Меньше минуты
+          {% else %}
+            {% if days > 0 %}
+              {{ days }} д.
+            {% endif %}
+            {% if hours > 0 %}
+              {% if days > 0 %}
+                {{ ' ' }}
+              {% endif %}
+                {{ hours }} ч.
+            {% endif %}
+            {% if minutes > 0 %}
+              {% if days > 0 or hours > 0 %}
+                {{ ' ' }}
+              {% endif %}
+                {{ minutes }} мин.
+            {% endif %}
+          {% endif %}
+
+- platform: group
+  name: "min_batteries_state"
+  device_class: battery
+  ignore_non_numeric: false
+  type: min
+  entities:
+    - sensor.childrens_room_motion_battery
+    # - sensor.childrens_room_remote_battery
+    - sensor.living_room_scene_switch_battery
+    - sensor.balcony_motion_battery
+    - sensor.door_sensor_battery
+    - sensor.palm_battery
+    - sensor.womens_happines_battery
+    - sensor.doorbell_button_battery
+    - sensor.siren_battpercentage
+    - sensor.toilet_water_leak_battery

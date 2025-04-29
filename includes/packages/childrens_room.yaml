@@ -1,0 +1,286 @@
+childrens_room:
+  scene:
+    - name: night
+      entities:
+        light.childrens_room_ceiling_lamp:
+          state: "on"
+          brightness: 64
+          color_mode: "color_temp"
+          color_temp: 370
+    - name: min
+      entities:
+        light.yeelight_s1_child_1:
+          state: "on"
+          brightness: 1
+          color_mode: "color_temp"
+          color_temp: 250
+        light.yeelight_s1_child_2:
+          state: "off"
+        light.yeelight_s1_child_3:
+          state: "off"
+        light.yeelight_s1_child_4:
+          state: "off"
+        light.yeelight_s1_child_5:
+          state: "off"
+        light.yeelight_s1_child_6:
+          state: "off"
+    - name: standard
+      entities:
+        light.childrens_room_ceiling_lamp:
+          state: "on"
+          brightness: 125
+          color_mode: "color_temp"
+          color_temp: 250
+    - name: full
+      entities:
+        light.childrens_room_ceiling_lamp:
+          state: "on"
+          brightness: 255
+          color_mode: "color_temp"
+          color_temp: 250
+
+  input_select:
+    scenes:
+      name: scene
+      options:
+        - Night
+        - Min
+        - Standard
+        - Full
+      initial: Standard
+
+  input_boolean:
+    childrens_room_resolution_auto_mode_light:
+      #   initial: true
+      icon: mdi:lightbulb-auto
+
+  input_datetime:
+    childrens_room_alarm_clock_time:
+      has_date: false
+      has_time: true
+      initial: 06:55
+
+  script:
+    blink_childrens_room_light:
+      sequence:
+        - service: light.toggle
+          data:
+            flash: short
+            transition: 0
+          target:
+            entity_id:
+              - light.yeelight_s1_child_1
+              - light.yeelight_s1_child_2
+              - light.yeelight_s1_child_4
+              - light.yeelight_s1_child_5
+        - delay: 00:00:00.25
+        - service: light.toggle
+          data:
+            flash: short
+            transition: 0
+          target:
+            entity_id:
+              - light.yeelight_s1_child_1
+              - light.yeelight_s1_child_2
+              - light.yeelight_s1_child_4
+              - light.yeelight_s1_child_5
+        - delay: 00:00:00.25
+
+    childrens_room_sunrise_start:
+      sequence:
+        - service: light.turn_on
+          target:
+            entity_id: light.childrens_room_ceiling_lamp
+          data:
+            effect: Sunrise
+
+  automation:
+    - id: apply_scene
+      alias: apply_scene
+      initial_state: true
+      trigger:
+        - platform: state
+          entity_id: input_select.scenes
+      action:
+        - service: scene.turn_on
+          data_template:
+            entity_id: scene.{{trigger.to_state.state}}
+            transition: 2
+
+    - id: childrens_room_change_scene
+      alias: childrens_room_change_scene
+      initial_state: true
+      trigger:
+        - platform: state
+          entity_id: sensor.living_room_scene_switch_action
+          to: "1_single"
+      condition:
+        - condition: state
+          entity_id: light.childrens_room_ceiling_lamp
+          state: "on"
+      action:
+        service: input_select.select_next
+        data:
+          entity_id: input_select.scenes
+
+    # - id: childrens_room_reset_resolution_auto_mode_light
+    #   alias: childrens_room_reset_resolution_auto_mode_light
+    #   # initial_state: true
+    #   trigger:
+    #     - platform: time
+    #       at: "15:32:00"
+    #     - platform: state
+    #       entity_id: sensor.childrens_room_remote_action
+    #       to: "button_5_single"
+    #   condition:
+    #     - condition: state
+    #       entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+    #       state: "off"
+    #   action:
+    #     - service: input_boolean.turn_on
+    #       target:
+    #         entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+    #     - service: script.blink_childrens_room_light
+
+    # - id: childrens_room_prohibit_auto_mode_light
+    #   alias: Выключить автоматический режим управления светом
+    #   trigger:
+    #     - platform: state
+    #       entity_id: sensor.childrens_room_remote_action
+    #       to: "button_1_single"
+    #   condition:
+    #     - condition: state
+    #       entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+    #       state: "on"
+    #   action:
+    #     - service: input_boolean.turn_off
+    #       target:
+    #         entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+    #     - service: script.blink_childrens_room_light
+    #     - service: script.blink_childrens_room_light
+
+    - id: childrens_room_light_on
+      alias: childrens_room_light_on
+      trigger:
+        platform: state
+        entity_id: binary_sensor.childrens_room_motion_occupancy
+        to: "on"
+      condition:
+        # - condition: numeric_state
+        #   entity_id: binary_sensor.childrens_room_motion_occupancy
+        #   attribute: illuminance
+        #   below: 130
+        - condition: time
+          after: "09:00:00"
+          before: "21:00:00"
+        - condition: state
+          entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+          state: "on"
+      action:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.full
+
+    - id: childrens_room_light_off
+      alias: childrens_room_light_off
+      trigger:
+        - platform: state
+          entity_id:
+            - binary_sensor.childrens_room_motion_occupancy
+          to: "off"
+          for: "00:03:00"
+      condition:
+        - condition: state
+          entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+          state: "on"
+        - condition: time
+          after: "09:00:00"
+          before: "21:00:00"
+        - condition: state
+          entity_id: light.yeelight_s1_child_1
+          state: "on"
+      action:
+        service: light.turn_off
+        target:
+          entity_id: light.childrens_room_ceiling_lamp
+
+    - id: childrens_room_light_night_on
+      alias: childrens_room_light_night_on
+      trigger:
+        platform: state
+        entity_id: binary_sensor.childrens_room_motion_occupancy
+        to: "on"
+      condition:
+        - condition: time
+          after: "23:00:00"
+          before: "06:00:00"
+        - condition: state
+          entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+          state: "on"
+      action:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.min
+
+    - id: childrens_room_light_night_off
+      alias: childrens_room_light_night_off
+      trigger:
+        - platform: state
+          entity_id:
+            - binary_sensor.childrens_room_motion_occupancy
+          to: "off"
+          for: "00:00:30"
+      condition:
+        - condition: state
+          entity_id: input_boolean.childrens_room_resolution_auto_mode_light
+          state: "on"
+        - condition: time
+          after: "23:00:00"
+          before: "06:00:00"
+        - condition: state
+          entity_id: light.yeelight_s1_child_1
+          state: "on"
+      action:
+        service: light.turn_off
+        target:
+          entity_id: light.childrens_room_ceiling_lamp
+
+    - id: childrens_room_light_alarm_clock_on
+      alias: childrens_room_light_alarm_clock_on
+      trigger:
+        platform: time
+        at: input_datetime.childrens_room_alarm_clock_time
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday_sensor
+          state: "on"
+        - condition: state
+          entity_id: binary_sensor.workday_sensor
+          state: "on"
+      action:
+        - service: script.childrens_room_sunrise_start
+
+    - id: childrens_room_high_co2_notify
+      alias: childrens_room_high_co2_notify
+      mode: single
+      triggers:
+        - trigger: numeric_state
+          entity_id: sensor.childrens_room_air_quality_co2
+          above: 1000
+          for: "00:15:00"
+      conditions:
+        - condition: state
+          entity_id: person.artemevi
+          state: home
+      action:
+        - service: notify.mobile_app_artemevk
+          data:
+            title: "CO2"
+            message: "Высокая концентрация углекислого газа в детской"
+            data:
+              url: "/lovelace/childrens_room"
+              push:
+                sound:
+                  name: "default"
+                  critical: 1
+                  volume: 0.1

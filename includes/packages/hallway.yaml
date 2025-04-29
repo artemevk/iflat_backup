@@ -1,0 +1,242 @@
+hallway:
+  timer:
+    smartintercom_wait:
+      name: "Домофон автовыключение открытия"
+      duration: "02:00:00"
+
+  sensor:
+    - platform: template
+      sensors:
+        smartintercom_modes:
+          value_template: >
+            {% if is_state('select.smartintercom_modes', 'Не активен') %}
+              normal
+            {% elif is_state('select.smartintercom_modes', 'Открывать всегда') %}
+              auto
+            {% else %}
+              quiet
+            {% endif %}
+        smartintercom_sound_invert:
+          value_template: >
+            {% if is_state("switch.smartintercom_sound", "on") %}
+              off
+            {% else %}
+              on
+            {% endif %}
+        smartintercom_accept_call_invert:
+          value_template: >
+            {% if is_state("switch.smartintercom_accept_call", "on") %}
+              off
+            {% else %}
+              on
+            {% endif %}
+
+  template:
+    - binary_sensor:
+        - name: "smartintercom state"
+          device_class: "door"
+          state: >
+            {% if is_state("switch.smartintercom_accept_call", "on") or is_state("select.smartintercom_modes", "Открывать всегда") %}
+              on
+            {% else %}
+              off
+            {% endif %}
+
+  script:
+    smartintercom_mode_set:
+      alias: Домофон (установка режима)
+      sequence:
+        - service: select.select_option
+          entity_id: select.smartintercom_modes
+          data:
+            option: >
+              {% if mode == "normal" %}
+                Не активен
+              {% elif mode == "auto" %}
+                Открывать всегда
+              {% else %}
+                Сброс вызова
+              {% endif %}
+      mode: queued
+
+    call:
+      alias: call
+      sequence:
+        - parallel:
+            - service: select.select_option
+              target:
+                entity_id: select.siren_melody
+              data:
+                option: "18"
+
+            - service: select.select_option
+              target:
+                entity_id: select.siren_volume
+              data:
+                option: "medium"
+            - service: number.set_value
+              data:
+                value: 2
+              target:
+                entity_id: number.siren_duration
+        - delay: "00:00:00.5"
+        - service: switch.turn_on
+          target:
+            entity_id:
+              - switch.siren_alarm
+
+  automation:
+    - id: "doorbell_call"
+      alias: Дверной звонок
+      description: ""
+      mode: restart
+      triggers:
+        - domain: mqtt
+          device_id: ca4306e18a6b6935c1711b36719632d2
+          type: action
+          subtype: single
+          trigger: device
+        - domain: mqtt
+          device_id: ca4306e18a6b6935c1711b36719632d2
+          type: action
+          subtype: double
+          trigger: device
+        - domain: mqtt
+          device_id: ca4306e18a6b6935c1711b36719632d2
+          type: action
+          subtype: hold
+          trigger: device
+      condition: []
+      action:
+        - service: script.turn_on
+          target:
+            entity_id: script.call
+
+    - id: "smartintercom_accept_call_on"
+      alias: Домофон (включается accept_call)
+      description: ""
+      trigger:
+        - platform: state
+          entity_id: switch.smartintercom_accept_call
+          from: "off"
+          to: "on"
+      condition: []
+      action:
+        - service: timer.start
+          entity_id: timer.smartintercom_wait
+      mode: single
+
+    - id: "smartintercom_accept_call_off"
+      alias: Домофон (выключается accept_call)
+      description: ""
+      trigger:
+        - platform: state
+          entity_id: switch.smartintercom_accept_call
+          from: "on"
+          to: "off"
+      condition: []
+      action:
+        - service: timer.cancel
+          entity_id: timer.smartintercom_wait
+      mode: single
+
+    - id: "smartintercom_timer_finished"
+      alias: Домофон (обработчик таймера accept_call)
+      description: ""
+      trigger:
+        - platform: event
+          event_type: timer.finished
+          event_data:
+            entity_id: timer.smartintercom_wait
+      condition:
+        - condition: state
+          entity_id: switch.smartintercom_accept_call
+          state: "on"
+      action:
+        - service: switch.turn_off
+          target:
+            entity_id: switch.smartintercom_accept_call
+      mode: single
+
+    - id: "smartintercom_call"
+      alias: SmartIntercom Call
+      description: ""
+      trigger:
+        - platform: state
+          entity_id:
+            - binary_sensor.smartinteircom_line_detect
+          from: "off"
+          to: "on"
+      condition: []
+      action:
+        - alias: Define Actions
+          variables:
+            action_allow_access: "{{ 'ALLOW_ACCESS_' ~ context.id }}"
+            action_allow_delivery: "{{ 'ALLOW_DELIVERY_' ~ context.id }}"
+            action_reject_access: "{{ 'REJECT_ACCESS_' ~ context.id }}"
+            notification_tag: smartintercom-call-detected
+        - alias: Send Call Notification
+          service: notify.mobile_app_artemevk
+          metadata: {}
+          data:
+            title: Домофон
+            message: Вызов
+            data:
+              tag: "{{ notification_tag }}"
+              url: /lovelace/main
+              actions:
+                - action: "{{ action_allow_access }}"
+                  title: Открыть
+                - action: "{{ action_allow_delivery }}"
+                  title: Открыть курьеру
+                - action: "{{ action_reject_access }}"
+                  title: Сбросить
+                  destructive: true
+          enabled: true
+        - alias: Wait for Notification Response
+          wait_for_trigger:
+            - platform: event
+              event_type: mobile_app_notification_action
+              event_data:
+                action: "{{ action_allow_access }}"
+            - platform: event
+              event_type: mobile_app_notification_action
+              event_data:
+                action: "{{ action_allow_delivery }}"
+            - platform: event
+              event_type: mobile_app_notification_action
+              event_data:
+                action: "{{ action_reject_access }}"
+          timeout:
+            hours: 0
+            minutes: 1
+            seconds: 0
+            milliseconds: 0
+          continue_on_timeout: false
+        - choose:
+            - conditions:
+                - condition: template
+                  value_template: "{{ wait.trigger.event.data.action == action_allow_access }}"
+              sequence:
+                - service: switch.turn_on
+                  target:
+                    entity_id: switch.smartintercom_accept_call
+                  data: {}
+            - conditions:
+                - condition: template
+                  value_template: "{{ wait.trigger.event.data.action == action_allow_delivery }}"
+              sequence:
+                - service: switch.turn_on
+                  target:
+                    entity_id: switch.smartintercom_delivery
+                  data: {}
+            - conditions:
+                - condition: template
+                  value_template: "{{ wait.trigger.event.data.action == action_reject_access }}"
+              sequence:
+                - service: switch.turn_on
+                  target:
+                    entity_id: switch.smartintercom_reject_call
+                  data: {}
+      mode: parallel
+      max: 5

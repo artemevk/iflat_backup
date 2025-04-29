@@ -1,0 +1,61 @@
+# - id: "purge database"
+#   alias: 00_purge_everyday
+#   initial_state: true
+#   trigger:
+#     - platform: time
+#       at: '01:00:00'
+#   action:
+#     - service: recorder.purge
+#       data:
+#           keep_days: 3
+#           repack: true
+
+- id: l1k3
+  alias: push_HA_configuration_to_GitHub_repo
+  initial_state: true
+  trigger:
+    # Everyday at 23:33:23 time
+    - platform: time
+      at: "23:33:23"
+  action:
+    - service: shell_command.push_to_github
+
+- id: start_offline_timer
+  alias: start_offline_timer
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.ihome_connection
+      to: "off"
+  action:
+    - service: timer.start
+      entity_id: timer.ihome_offline
+
+- id: ihome_disconnected
+  alias: ihome_disconnected
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.ihome_offline
+  action:
+    - service: notify.tlg_user1_id
+      data:
+        title: "#system"
+        message: "Сервер iHome не отвечает!"
+    - service: notify.mobile_app_artemevk
+      data:
+        message: "Сервер iHome не отвечает!"
+
+- id: cancel_offline_timer
+  alias: cancel_offline_timer
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.ihome_connection
+      to: "on"
+  action:
+    - service: timer.cancel
+      entity_id: timer.ihome_offline

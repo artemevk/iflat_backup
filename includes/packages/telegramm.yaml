@@ -1,0 +1,357 @@
+telegramm:
+  timer:
+    1m:
+      duration: "00:01:00"
+
+    ihome_offline:
+      duration: "00:03:00"
+      icon: mdi:lan-disconnect
+
+  sensor:
+    - platform: template
+      sensors:
+        batteries_states_msg:
+          value_template: |
+            {{"\U0001F50B"}}Батарейки:{% for entity_id in state_attr('sensor.min_batteries_state', 'entity_id') %}{% set friendly_name = entity_id.split('.')[1].split('_bat')[0] %}{% set value = states(entity_id, with_unit=True) %}
+            {{ friendly_name | regex_replace('_', ' ') + ": " + value }}{% endfor %}
+
+        report_msg:
+          value_template: |
+            {{"\U0001F4CB"}} Состояние системы:
+            {{"\U0001F50C"}} Свичей недоступно - {{ states('sensor.unavailable_now_switch') }}
+            {{"\U0001F321"}} Сенсоров недоступно - {{ states('sensor.unavailable_now_sensor') }}
+            {{"\U0001F51F"}} Бинарных сенсоров недоступно - {{ states('sensor.unavailable_now_binary_sensor') }}
+            {{"\U0001F4A1"}} Светильников недоступно - {{ states('sensor.unavailable_now_light') }}
+
+  automation:
+    - alias: "Telegram bot hello"
+      trigger:
+        - platform: event
+          event_type: telegram_command # меню/сообщение telegramm
+          event_data:
+            command: "/start"
+      action:
+        - service: telegram_bot.send_message
+          data_template:
+            target: "{{ trigger.event.data.user_id }}"
+            message: "Добро пожаловать в главное меню. Выберите действие:"
+            disable_notification: true
+            inline_keyboard:
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
+
+    - alias: "Telegram bot main menu"
+      trigger:
+        - platform: event
+          event_type: telegram_callback # встроенная клавиатура telegramm
+          event_data:
+            command: "/mm"
+      action:
+        - service: telegram_bot.delete_message
+          data_template:
+            message_id: "{{ trigger.event.data.message.message_id }}"
+            chat_id: "{{ trigger.event.data.chat_id }}"
+        - service: telegram_bot.send_message
+          data_template:
+            target: "{{ trigger.event.data.user_id }}"
+            message: "Добро пожаловать в главное меню. Выберите действие:"
+            disable_notification: true
+            inline_keyboard:
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
+
+    - alias: "Telegram bot main menu from msg"
+      trigger:
+        - platform: event
+          event_type: telegram_command # меню/сообщение telegramm
+          event_data:
+            command: "/mm"
+      action:
+        - service: telegram_bot.send_message
+          data_template:
+            target: "{{ trigger.event.data.user_id }}"
+            message: "Добро пожаловать в главное меню. Выберите действие:"
+            disable_notification: true
+            inline_keyboard:
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
+
+    - id: Отчет при запуске системы
+      alias: start_message
+      initial_state: true
+      trigger:
+        - platform: homeassistant
+          event: start
+      action:
+        - service: notify.tlg_user1_id
+          data:
+            title: "#system"
+            message: |
+              {{"\U0001F5A5"}} Зафиксирован запуск. Отчет о состоянии будет через 2 минуты.
+        - service: timer.start
+          target:
+            entity_id: timer.1m
+        # Задержка и отправка полного отчета
+        - delay: 00:02:00
+        - service: notify.tlg_user1_id
+          data:
+            title: "#system"
+            message: |
+              {{ states("sensor.report_msg") }}
+
+              {{ states('sensor.batteries_states_msg') }}
+        # Задержка 2 с
+        - delay: 00:00:02
+        - service: notify.tlg_user1_id
+          data:
+            # title: "#system"
+            message: "Добро пожаловать в главное меню. Выберите действие:"
+            data:
+              inline_keyboard:
+                - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+                - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
+
+    # Отчет о системе по запросу
+    - id: Отчет о системе по запросу
+      alias: send_report
+      initial_state: true
+      trigger:
+        - platform: event
+          event_type: telegram_callback # встроенная клавиатура telegramm
+          event_data:
+            command: "/report"
+      action:
+        - service: telegram_bot.delete_message
+          data_template:
+            message_id: "{{ trigger.event.data.message.message_id }}"
+            chat_id: "{{ trigger.event.data.chat_id }}"
+        - service: telegram_bot.send_message
+          data_template:
+            target: "{{ trigger.event.data.user_id }}"
+            title: "#system"
+            message: |
+              {{ states('sensor.report_msg') }}
+
+              {{ states('sensor.batteries_states_msg') }}
+            disable_notification: true
+            inline_keyboard:
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
+
+    # Отчет при потере объектов
+    - id: Отчет при потере объектов
+      alias: send_report_when_objects_are_lost
+      initial_state: true
+      trigger:
+        - platform: state # при потере объектов
+          entity_id: sensor.unavailable_objects
+          for: "00:03:00"
+      condition:
+        condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ trigger.to_state.state > trigger.from_state.state }}"
+      action:
+        - service: telegram_bot.send_message
+          data_template:
+            target: !secret tlg_user1_id
+            message: |
+              {{"\U0000203C"}}Обнаружена новая неисправность
+              {{ states('sensor.report_msg') }}
+            data:
+              inline_keyboard:
+                - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+                - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
+
+    - id: Отправить отчет о состоянии батареек
+      alias: send_battaries_states_msg
+      initial_state: true
+      trigger:
+        - platform: event
+          event_type: telegram_callback # встроенная клавиатура telegramm
+          event_data:
+            command: "/battaries_states"
+      action:
+        - service: telegram_bot.delete_message
+          data_template:
+            message_id: "{{ trigger.event.data.message.message_id }}"
+            chat_id: "{{ trigger.event.data.chat_id }}"
+        - service: telegram_bot.send_message
+          data_template:
+            target: "{{ trigger.event.data.user_id }}"
+            title: "#system"
+            disable_notification: true
+            message: |
+              {{ states('sensor.batteries_states_msg') }}
+              ---------------------
+              childrens room motion - CR2032
+              living room scene switch - CR2430
+              balcony motion - 2xCR2450
+              door sensor - CR1632
+              palm - 2xAAA, LR03
+              womens happines - 2xAAA
+              siren - 2xCR123A
+              door bell button - CR2032
+            inline_keyboard:
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
+
+    - id: Автоматический отчет о состоянии батареек
+      alias: send_battaries_states_msg_auto
+      initial_state: true
+      trigger:
+        - platform: numeric_state
+          entity_id: sensor.min_batteries_state
+          below: 20
+      action:
+        - service: telegram_bot.send_message
+          data_template:
+            target: !secret tlg_user1_id
+            title: "#system"
+            message: |
+              {{ states('sensor.batteries_states_msg') }}
+              ---------------------
+              childrens room motion - CR2032
+              living room scene switch - CR2430
+              balcony motion - 2xCR2450
+              door sensor - CR1632
+              palm - 2xAAA, LR03
+              womens happines - 2xAAA
+              siren - 2xCR123A
+              door bell button - CR2032
+              toilet water leak - CR2032
+            inline_keyboard:
+              - "{{'\U0001F4CB'}}Отчет о системе:/report, {{'\U0001F50B'}}Батарейки:/battaries_states"
+              - "{{'\U0001F6A8'}}Сигнализация:/alarm_menu, {{'\U0001F6AA'}}Домофон:/smartintercom"
+
+    # Сигнализация
+    - id: Меню Сигнализация
+      alias: alarm_menu
+      initial_state: true
+      trigger:
+        - platform: event
+          event_type: telegram_callback # встроенная клавиатура telegramm
+          event_data:
+            command: "/alarm_menu"
+        - platform: event
+          event_type: telegram_command # меню/сообщение telegramm
+          event_data:
+            command: "/alarm_menu"
+      action:
+        - service: telegram_bot.delete_message
+          data_template:
+            message_id: "{{ trigger.event.data.message.message_id }}"
+            chat_id: "{{ trigger.event.data.chat_id }}"
+        - service: telegram_bot.send_message
+          data_template:
+            target: "{{ trigger.event.data.user_id }}"
+            message: |
+              {{ "\n" -}}{{"\U0001F6A8"}} Сигнализация {% if states('alarm_control_panel.home_alarm') == 'disarmed' %}{{"выкл."}}
+              {% elif states('alarm_control_panel.home_alarm') == 'armed' %}{{"вкл."}}
+              {% else %}{{ states('alarm_control_panel.home_alarm') }}
+              {% endif %}
+              {{ "\n" -}}
+            disable_notification: true
+            inline_keyboard:
+              - "Вкл.:/turn_on_alarm, Выкл.:/turn_off_alarm"
+              - "{{'\U0001F4D6'}} Главное меню:/mm, {{'\U0001F504'}}Обновить:/alarm_menu"
+
+    - id: turn_on_alarm
+      alias: turn_on_alarm
+      initial_state: true
+      trigger:
+        - platform: event
+          event_type: telegram_callback # встроенная клавиатура telegramm
+          event_data:
+            command: "/turn_on_alarm"
+      condition:
+        - condition: state
+          entity_id: alarm_control_panel.home_alarm
+          state: "disarmed"
+      action:
+        service: alarm_control_panel.alarm_arm_away
+        data: {}
+        target:
+          entity_id: alarm_control_panel.home_alarm
+
+    - id: turn_off_alarm
+      alias: turn_off_alarm
+      initial_state: true
+      trigger:
+        - platform: event
+          event_type: telegram_callback # встроенная клавиатура telegramm
+          event_data:
+            command: "/turn_off_alarm"
+      condition:
+        condition: template
+        value_template: '{{ states("alarm_control_panel.home_alarm") != "disarmed" }}'
+      action:
+        service: alarm_control_panel.alarm_disarm
+        data: {}
+        target:
+          entity_id: alarm_control_panel.home_alarm
+
+    - id: "telegram_smartintercom"
+      alias: Telegram (домофон - menu)
+      description: ""
+      trigger:
+        - platform: event
+          event_type: telegram_command # меню/сообщение telegramm
+          event_data:
+            command: "/smartintercom"
+        - platform: event
+          event_type: telegram_callback # встроенная клавиатура telegramm
+          event_data:
+            command: "/smartintercom"
+      action:
+        - service: telegram_bot.delete_message
+          data_template:
+            message_id: "{{ trigger.event.data.message.message_id }}"
+            chat_id: "{{ trigger.event.data.chat_id }}"
+        - service: telegram_bot.send_message
+          data:
+            target: "{{ trigger.event.data.user_id }}"
+            title: '{{"\U0001F6AA"}} Домофон'
+            message: ""
+            disable_notification: true
+            inline_keyboard:
+              - '{% set mode = states("select.smartintercom_modes") %}
+                {% if mode == "Не активен" %}
+                {{"\U0001F7E2"}}
+                {% else %}
+                {{"\U0001F534"}}
+                {% endif %}
+                Не активен:/smartintercom_not_active,
+                {% set mode = states("select.smartintercom_modes") %}
+                {% if mode == "Открывать всегда" %}
+                {{"\U0001F7E2"}}
+                {% else %}
+                {{"\U0001F534"}}
+                {% endif %}
+                Открывать всегда:/smartintercom_open_always'
+              - '{% if is_state("switch.smartintercom_accept_call", "on") %}
+                {{"\U0001F7E2"}}
+                {% else %}
+                {{"\U0001F534"}}
+                {% endif %}
+                Открыть:/smartintercom_accept_call,
+                {% set mode = states("select.smartintercom_modes") %}
+                {% if mode == "Сброс вызова" %}
+                {{"\U0001F7E2"}}
+                {% else %}
+                {{"\U0001F534"}}
+                {% endif %}
+                Сброс вызова:/smartintercom_reset'
+              - '{% if is_state("switch.smartintercom_sound", "on") %}
+                {{"\U0001F7E2"}}
+                {% else %}
+                {{"\U0001F534"}}
+                {% endif %}
+                Звук:/smartintercom_sound,
+                {% if is_state("switch.smartintercom_mute", "on") %}
+                {{"\U0001F7E2"}}
+                {% else %}
+                {{"\U0001F534"}}
+                {% endif %}
+                Mute:/smartintercom_mute'
+              - "{{'\U0001F4D6'}} Главное меню:/mm, {{'\U0001F504'}}Обновить:/smartintercom"

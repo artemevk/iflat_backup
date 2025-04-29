@@ -1,0 +1,173 @@
+# homeassistant:
+# name: iFlat
+# latitude: !secret latitude_coord
+# longitude: !secret longitude_coord
+# radius: 300
+#   elevation: 211
+# unit_system: metric
+# country: RU
+# time_zone: Europe/Moscow
+# packages: !include_dir_merge_named includes/packages
+# allowlist_external_dirs:
+#   - "/config/tmp/"
+#   media_dirs:
+#     local: /media
+
+# media_source:
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Text to speech
+# tts:
+#   - platform: google_translate
+
+frontend:
+  extra_module_url:
+    - /hacsfiles/ha-yandex-icons/yandex-icons.js
+    - /local/card-mod.js
+
+lovelace:
+  resources:
+    - url: /local/mini-media-player-bundle.js?v=1.16.9
+      type: module
+    - url: /local/mini-graph-card-bundle.js?v=0.12.1
+      type: module
+    - url: /webrtc/webrtc-camera.js
+      type: module
+    - url: /local/custom-ui.js
+      type: module
+
+alarm_control_panel:
+  - platform: manual
+    name: Home Alarm
+    code_arm_required: false
+    arming_time: 30
+    delay_time: 20
+    trigger_time: 4
+    arming_states:
+      - armed_away
+      - armed_home
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      arming_time: 0
+      delay_time: 0
+
+automation: !include_dir_merge_list includes/automation
+# binary_sensor: !include includes/binary_sensor.yaml
+# input_boolean: !include includes/input_boolean.yaml
+light: !include includes/lights.yaml
+recorder: !include includes/recorder.yaml
+# scene: !include scenes.yaml
+script: !include scripts.yaml
+sensor: !include_dir_merge_list includes/sensor/
+# yeelight: !include includes/yeelight.yaml
+template: !include includes/template.yaml
+
+command_line:
+  - sensor:
+      name: CPU Temperature
+      command: "cat /sys/class/thermal/thermal_zone0/temp"
+      # If errors occur, make sure configuration file is encoded as UTF-8
+      unit_of_measurement: "°C"
+      value_template: "{{ value | multiply(0.001) | round(1) }}"
+
+# Платформа телеграмм бота
+telegram_bot:
+  - platform: polling
+    api_key: !secret api_token_bot
+    allowed_chat_ids:
+      - !secret tlg_user1_id
+      - !secret tlg_user2_id
+      - !secret tlg_user3_id
+      - !secret tlg_user4_id
+      - !secret tlg_user5_id
+
+# Платформа телеграмм уведомлений
+notify:
+  - platform: telegram
+    name: tlg_user1_id
+    chat_id: !secret tlg_user1_id
+  - platform: telegram
+    name: tlg_user2_id
+    chat_id: !secret tlg_user2_id
+  - platform: telegram
+    name: tlg_user3_id
+    chat_id: !secret tlg_user3_id
+  - platform: telegram
+    name: tlg_user4_id
+    chat_id: !secret tlg_user4_id
+  - platform: telegram
+    name: tlg_user5_id
+    chat_id: !secret tlg_user5_id
+  - platform: group
+    name: all_telegram
+    services:
+      - service: tlg_user1_id
+      - service: tlg_user2_id
+      - service: tlg_user3_id
+      - service: tlg_user4_id
+      - service: tlg_user5_id
+  - platform: group
+    name: mariya_konstantin_ivan
+    services:
+      - service: tlg_user1_id
+      - service: tlg_user2_id
+      - service: tlg_user5_id
+  - platform: group
+    name: alarm
+    services:
+      - service: mobile_app_artemevk
+      - service: mobile_app_artemevam
+
+shell_command:
+  push_to_github: cd /config && bash ./ha_gitpush.sh
+
+yandex_smart_home:
+  # notifier:
+  #   - oauth_token: !secret oauth_token
+  #     skill_id: !secret skill_id
+  #     user_id: !secret user_id
+  entity_config:
+    binary_sensor.smartintercom_state:
+      name: Домофон
+      room: Прихожая
+      type: devices.types.openable
+      modes:
+        program:
+          normal: [normal]
+          quiet: [quiet]
+          auto: [auto]
+      custom_modes:
+        program:
+          state_entity_id: sensor.smartintercom_modes
+          set_mode:
+            service: script.smartintercom_mode_set
+            data:
+              mode: "{{ mode }}"
+      custom_toggles:
+        controls_locked:
+          state_entity_id: sensor.smartintercom_accept_call_invert
+          turn_on:
+            service: switch.turn_off
+            entity_id: switch.smartintercom_accept_call
+          turn_off:
+            service: switch.turn_on
+            entity_id: switch.smartintercom_accept_call
+        backlight:
+          state_entity_id: switch.smartintercom_led
+          turn_on:
+            service: switch.turn_on
+            entity_id: switch.smartintercom_led
+          turn_off:
+            service: switch.turn_off
+            entity_id: switch.smartintercom_led
+        mute:
+          state_entity_id: sensor.smartintercom_sound_invert
+          turn_on:
+            service: switch.turn_off
+            entity_id: switch.smartintercom_sound
+          turn_off:
+            service: switch.turn_on
+            entity_id: switch.smartintercom_sound

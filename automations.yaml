@@ -1,0 +1,29 @@
+- id: '1716476299336'
+  alias: doorbell
+  description: doorbell
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.doorbell_button_action
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.balcony_light_switch_left
+    data: {}
+  mode: restart
+- id: '1716476565706'
+  alias: doorbell
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.doorbell_button_action
+  condition: []
+  action:
+  - service: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.balcony_light_switch_left
+  mode: restart

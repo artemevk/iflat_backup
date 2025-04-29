@@ -1,0 +1,21 @@
+- platform: group
+  name: "childrens_room_ceiling_lamp"
+  entities:
+    - light.yeelight_s1_child_1
+    - light.yeelight_s1_child_2
+    - light.yeelight_s1_child_3
+    - light.yeelight_s1_child_4
+    - light.yeelight_s1_child_5
+    - light.yeelight_s1_child_6
+
+- platform: group
+  name: "all"
+  entities:
+    - light.yeelight_s1_child_1
+    - light.yeelight_s1_child_2
+    - light.yeelight_s1_child_3
+    - light.yeelight_s1_child_4
+    - light.yeelight_s1_child_5
+    - light.yeelight_s1_child_6
+    - light.balcony_one_bulb
+    - light.balcony_two_bulbs

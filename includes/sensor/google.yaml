@@ -1,0 +1,26 @@
+# - platform: template
+#   sensors:
+# last_google_backup:
+#   friendly_name: "Последний бэкап"
+#   value_template: "{{ as_timestamp(state_attr('sensor.backup_state', 'last_backup')) | timestamp_custom('%d.%m.%Y %H:%M:%S %Z') }}"
+#   icon_template: >
+#     {% if is_state("binary_sensor.backups_stale", "on") %}
+#       mdi:calendar-check-outline
+#     {% else %}
+#       mdi:calendar-alert
+#     {% endif %}
+#   attributes:
+#     icon_color: >
+#       if (entities['binary_sensor.backups_stale'].state == 'off') return 'green';
+#       if (entities['binary_sensor.backups_stale'].state == 'on') return 'red'
+#       return 'gray';
+
+# snapshots_in_google_drive:
+#   friendly_name: "Снапшотов на Googe Drive"
+#   value_template: "{{ state_attr('sensor.backup_state', 'backups_in_google_drive') }}"
+#   icon_template: mdi:folder-google-drive
+
+# snapshots_in_hassio:
+#   friendly_name: "Снапшотов в Наssio"
+#   value_template: "{{ state_attr('sensor.backup_state', 'backups_in_home_assistant') }}"
+#   icon_template: mdi:home-assistant

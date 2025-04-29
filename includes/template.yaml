@@ -1,0 +1,47 @@
+binary_sensor:
+  - name: "any_light_on"
+    state: >
+      {% set domain = 'light' %}
+      {% set state = 'on' %}
+      {{ states[domain] | selectattr('state','eq', state) | list | count > 0 }}
+    device_class: light
+    icon: mdi:lightbulb-group
+
+sensor:
+  - name: last_google_backup
+    state: "{{ as_timestamp(state_attr('sensor.backup_state', 'last_backup')) | timestamp_custom('%d.%m.%Y %H:%M:%S %Z') }}"
+    icon: >
+      {% if is_state("binary_sensor.backups_stale", "off") %}
+        mdi:calendar-check-outline
+      {% else %}
+        mdi:calendar-alert
+      {% endif %}
+    attributes:
+      icon_color: >
+        {{'green' if states('binary_sensor.backups_stale') == 'off' else 'red'}}
+
+  - name: snapshots_in_google_drive
+    state: "{{ state_attr('sensor.backup_state', 'backups_in_google_drive') }}"
+    icon: mdi:folder-google-drive
+
+  - name: snapshots_in_hassio
+    state: "{{ state_attr('sensor.backup_state', 'backups_in_home_assistant') }}"
+    icon: mdi:home-assistant
+
+  - name: unavailable_objects
+    state: >
+      {{ int(states('sensor.unavailable_now_light')) +
+          int(states('sensor.unavailable_now_switch')) +
+          int(states('sensor.unavailable_now_sensor')) +
+          int(states('sensor.unavailable_now_binary_sensor')) }}
+    icon: >
+      {{ 'mdi:thumb-up' if this.state|int(default=0) == 0 else 'mdi:thumb-down'}}
+    attributes:
+      icon_color: >
+        {% if states('sensor.unavailable_objects')|int(default=0) == 0 %}
+          'green'
+        {% elif states('sensor.unavailable_objects')|int(default=0) < 3 %}
+          'gray'
+        {% else %}
+          'red'
+        {% endif%}

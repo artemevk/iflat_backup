@@ -1,0 +1,68 @@
+homeassistant:
+  enabled: true
+mqtt:
+  server: mqtt://core-mosquitto
+  user: mqtt
+  password: mqtt
+  base_topic: zigbee2mqtt
+serial:
+  port: /dev/ttyUSB0
+  adapter: zstack
+frontend:
+  enabled: true
+  port: 8099
+advanced:
+  log_level: warning
+  log_syslog:
+    app_name: Zigbee2MQTT
+    eol: /n
+    host: localhost
+    localhost: localhost
+    path: /dev/log
+    pid: process.pid
+    port: 514
+    protocol: udp4
+    type: '5424'
+  last_seen: ISO_8601
+device_options: {}
+devices:
+  '0xa4c138b0790349b7':
+    friendly_name: plug
+  '0xa4c138507fc3da4d':
+    friendly_name: childrens_room_socket
+  '0x00158d00091aebb7':
+    friendly_name: door_sensor
+  '0x00158d0008d91f54':
+    friendly_name: childrens_room_motion
+  '0x00124b002871d590':
+    friendly_name: palm
+  '0x00124b00281b0401':
+    friendly_name: womens_happines
+  '0xb43522fffef9b116':
+    friendly_name: living_room_scene_switch
+  '0x00124b002a61a44b':
+    friendly_name: childrens_room_air_quality
+  '0x54ef4410009b5f22':
+    friendly_name: balcony_motion
+  '0x00124b002a619af3':
+    friendly_name: ikea_vindriktning
+  '0xa4c138b5af7ff183':
+    friendly_name: balcony_light_switch
+  '0xa4c138bf35b5bc0b':
+    friendly_name: balcony_plug
+  '0xa4c138508f0d809b':
+    friendly_name: balcony_thermostat
+    debounce: 1
+    homeassistant: {}
+    optimistic: true
+  '0x00158d0007111a9a':
+    friendly_name: toilet_water_leak
+  '0x00158d00048742e4':
+    friendly_name: balcony_climate
+  '0x54ef441000823aac':
+    friendly_name: doorbell_button
+  '0xa4c1382ddbf3409f':
+    friendly_name: siren
+availability:
+  enabled: true
+version: 4

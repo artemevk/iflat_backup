@@ -1,0 +1,57 @@
+kitchen_room:
+  automation:
+    - id: Сообщение о пересохших цветах
+      alias: dry_flowers
+      #   initial_state: true
+      trigger:
+        - platform: time_pattern
+          hours: "/6"
+      condition:
+        and:
+          - condition: state
+            entity_id: timer.1m
+            state: "idle"
+          - or:
+              - condition: numeric_state
+                entity_id: sensor.palm_soil_moisture
+                below: 50
+              - condition: numeric_state
+                entity_id: sensor.womens_happines_soil_moisture
+                below: 50
+      action:
+        - service: notify.mariya_konstantin_ivan
+          data:
+            message: |
+              {{"\U0001F940"}} Мы высохли, дайте попить. 
+              {{- " "}}{{"\U0001F337"}}: {{ states('sensor.womens_happines_soil_moisture') }}
+              {{- ", "}}{{"\U0001F334"}}: {{ states('sensor.palm_soil_moisture') }}
+              Ваши цветы.
+
+    - id: Благодарность
+      alias: wet_flowers
+      initial_state: true
+      trigger:
+        - platform: numeric_state
+          entity_id: sensor.palm_soil_moisture
+          above: 80
+        - platform: numeric_state
+          entity_id: sensor.womens_happines_soil_moisture
+          above: 80
+      condition:
+        - condition: state
+          entity_id: timer.1m
+          state: "idle"
+        - condition: numeric_state
+          entity_id: sensor.palm_soil_moisture
+          above: 80
+        - condition: numeric_state
+          entity_id: sensor.womens_happines_soil_moisture
+          above: 80
+      action:
+        - service: notify.mariya_konstantin_ivan
+          data:
+            message: |
+              {{"\U0001FAB4"}} Спасибо за то, что полили нас.
+              {{- " "}}{{"\U0001F337"}}: {{ states('sensor.womens_happines_soil_moisture') }}
+              {{- ", "}}{{"\U0001F334"}}: {{ states('sensor.palm_soil_moisture') }}
+              Ваши цветы.
