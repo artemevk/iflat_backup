@@ -3,24 +3,26 @@ kitchen_room:
     - id: Сообщение о пересохших цветах
       alias: dry_flowers
       #   initial_state: true
-      trigger:
-        - platform: time_pattern
+      triggers:
+        - trigger: time_pattern
           hours: "/6"
-      condition:
-        and:
-          - condition: state
-            entity_id: timer.1m
-            state: "idle"
-          - or:
-              - condition: numeric_state
-                entity_id: sensor.palm_soil_moisture
-                below: 50
-              - condition: numeric_state
-                entity_id: sensor.womens_happines_soil_moisture
-                below: 50
-      action:
-        - service: notify.mariya_konstantin_ivan
+      conditions:
+        - and:
+            - condition: state
+              entity_id: timer.1m
+              state: "idle"
+            - or:
+                - condition: numeric_state
+                  entity_id: sensor.palm_soil_moisture
+                  below: 50
+                - condition: numeric_state
+                  entity_id: sensor.womens_happines_soil_moisture
+                  below: 50
+      actions:
+        - action: telegram_bot.send_message
           data:
+            target:
+              [!secret tlg_user1_id, !secret tlg_user2_id, !secret tlg_user5_id]
             message: |
               {{"\U0001F940"}} Мы высохли, дайте попить. 
               {{- " "}}{{"\U0001F337"}}: {{ states('sensor.womens_happines_soil_moisture') }}
@@ -30,14 +32,14 @@ kitchen_room:
     - id: Благодарность
       alias: wet_flowers
       initial_state: true
-      trigger:
-        - platform: numeric_state
+      triggers:
+        - trigger: numeric_state
           entity_id: sensor.palm_soil_moisture
           above: 80
-        - platform: numeric_state
+        - trigger: numeric_state
           entity_id: sensor.womens_happines_soil_moisture
           above: 80
-      condition:
+      conditions:
         - condition: state
           entity_id: timer.1m
           state: "idle"
@@ -47,9 +49,11 @@ kitchen_room:
         - condition: numeric_state
           entity_id: sensor.womens_happines_soil_moisture
           above: 80
-      action:
-        - service: notify.mariya_konstantin_ivan
+      actions:
+        - action: telegram_bot.send_message
           data:
+            target:
+              [!secret tlg_user1_id, !secret tlg_user2_id, !secret tlg_user5_id]
             message: |
               {{"\U0001FAB4"}} Спасибо за то, что полили нас.
               {{- " "}}{{"\U0001F337"}}: {{ states('sensor.womens_happines_soil_moisture') }}

@@ -1,13 +1,13 @@
-# homeassistant:
-# name: iFlat
-# latitude: !secret latitude_coord
-# longitude: !secret longitude_coord
-# radius: 300
-#   elevation: 211
-# unit_system: metric
-# country: RU
-# time_zone: Europe/Moscow
-# packages: !include_dir_merge_named includes/packages
+homeassistant:
+  # name: iFlat
+  # latitude: !secret latitude_coord
+  # longitude: !secret longitude_coord
+  # radius: 300
+  #   elevation: 211
+  # unit_system: metric
+  # country: RU
+  # time_zone: Europe/Moscow
+  packages: !include_dir_merge_named includes/packages
 # allowlist_external_dirs:
 #   - "/config/tmp/"
 #   media_dirs:
@@ -44,7 +44,7 @@ alarm_control_panel:
     code_arm_required: false
     arming_time: 30
     delay_time: 20
-    trigger_time: 4
+    trigger_time: 60
     arming_states:
       - armed_away
       - armed_home
@@ -64,14 +64,6 @@ script: !include scripts.yaml
 sensor: !include_dir_merge_list includes/sensor/
 # yeelight: !include includes/yeelight.yaml
 template: !include includes/template.yaml
-
-command_line:
-  - sensor:
-      name: CPU Temperature
-      command: "cat /sys/class/thermal/thermal_zone0/temp"
-      # If errors occur, make sure configuration file is encoded as UTF-8
-      unit_of_measurement: "°C"
-      value_template: "{{ value | multiply(0.001) | round(1) }}"
 
 # Платформа телеграмм бота
 telegram_bot:
@@ -101,20 +93,6 @@ notify:
   - platform: telegram
     name: tlg_user5_id
     chat_id: !secret tlg_user5_id
-  - platform: group
-    name: all_telegram
-    services:
-      - service: tlg_user1_id
-      - service: tlg_user2_id
-      - service: tlg_user3_id
-      - service: tlg_user4_id
-      - service: tlg_user5_id
-  - platform: group
-    name: mariya_konstantin_ivan
-    services:
-      - service: tlg_user1_id
-      - service: tlg_user2_id
-      - service: tlg_user5_id
   - platform: group
     name: alarm
     services:
