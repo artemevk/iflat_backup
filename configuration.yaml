@@ -1,12 +1,12 @@
 homeassistant:
-  # name: iFlat
-  # latitude: !secret latitude_coord
-  # longitude: !secret longitude_coord
-  # radius: 300
-  #   elevation: 211
-  # unit_system: metric
-  # country: RU
-  # time_zone: Europe/Moscow
+  name: iFlat
+  latitude: !secret latitude_coord
+  longitude: !secret longitude_coord
+  radius: 300
+  elevation: 211
+  unit_system: metric
+  country: RU
+  time_zone: Europe/Moscow
   packages: !include_dir_merge_named includes/packages
 # allowlist_external_dirs:
 #   - "/config/tmp/"
