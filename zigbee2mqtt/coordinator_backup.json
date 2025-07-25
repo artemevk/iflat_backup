@@ -4,7 +4,7 @@
     "version": 1,
     "source": "zigbee-herdsman@4.3.1",
     "internal": {
-      "date": "2025-07-23T19:24:54.250Z",
+      "date": "2025-07-25T10:08:12.926Z",
       "znpVersion": 1
     }
   },
@@ -25,7 +25,7 @@
   "network_key": {
     "key": "01030507090b0d0f00020406080a0c0d",
     "sequence_number": 0,
-    "frame_counter": 29888760
+    "frame_counter": 29954074
   },
   "devices": [
     {
@@ -35,7 +35,7 @@
       "link_key": {
         "key": "6d16ddb1fcb91e67d0ada4e5ccd71e94",
         "rx_counter": 0,
-        "tx_counter": 5437
+        "tx_counter": 5459
       }
     },
     {
@@ -45,7 +45,7 @@
       "link_key": {
         "key": "37490dc7df7bc85f4e1d3da9df8875e4",
         "rx_counter": 0,
-        "tx_counter": 792
+        "tx_counter": 814
       }
     },
     {
@@ -55,7 +55,7 @@
       "link_key": {
         "key": "8ad79589df4e72e4f383a5e7dfbdcf5f",
         "rx_counter": 0,
-        "tx_counter": 902
+        "tx_counter": 924
       }
     },
     {
@@ -65,7 +65,7 @@
       "link_key": {
         "key": "fb6ac5ca6769b29ccb04c539dad2cbc8",
         "rx_counter": 0,
-        "tx_counter": 5437
+        "tx_counter": 5459
       }
     },
     {
@@ -75,7 +75,7 @@
       "link_key": {
         "key": "db8899a39cf1fadf283522dac8c194df",
         "rx_counter": 0,
-        "tx_counter": 902
+        "tx_counter": 924
       }
     },
     {
@@ -85,7 +85,7 @@
       "link_key": {
         "key": "5edad3648194d167e5a38754ef9422da",
         "rx_counter": 0,
-        "tx_counter": 5437
+        "tx_counter": 5459
       }
     },
     {
@@ -95,7 +95,7 @@
       "link_key": {
         "key": "3e1d59cc4c0ccac383a620987c62ca30",
         "rx_counter": 0,
-        "tx_counter": 759
+        "tx_counter": 781
       }
     },
     {
@@ -105,7 +105,7 @@
       "link_key": {
         "key": "ea46bf908f081bfb93128ffe8ffba640",
         "rx_counter": 0,
-        "tx_counter": 4876
+        "tx_counter": 4898
       }
     },
     {
@@ -115,7 +115,7 @@
       "link_key": {
         "key": "bdfd12cbdf7bc85fc4a922a5df8875e4",
         "rx_counter": 0,
-        "tx_counter": 1925
+        "tx_counter": 1947
       }
     },
     {
@@ -130,7 +130,7 @@
       "link_key": {
         "key": "a47b51f05f95da4cca7ba24de4ec8e7c",
         "rx_counter": 0,
-        "tx_counter": 4865
+        "tx_counter": 4887
       }
     },
     {
@@ -140,7 +140,7 @@
       "link_key": {
         "key": "ea131adfd3230bf3be2374df209eb08a",
         "rx_counter": 0,
-        "tx_counter": 2167
+        "tx_counter": 2189
       }
     },
     {
@@ -150,7 +150,7 @@
       "link_key": {
         "key": "6fe68ef530914dde3bd6e0f5c32cf6a7",
         "rx_counter": 0,
-        "tx_counter": 4843
+        "tx_counter": 4865
       }
     },
     {
@@ -160,7 +160,7 @@
       "link_key": {
         "key": "c343df20a5fba640ba17ef4ea5081bfb",
         "rx_counter": 0,
-        "tx_counter": 4810
+        "tx_counter": 4832
       }
     },
     {
@@ -170,7 +170,7 @@
       "link_key": {
         "key": "daab988c9bfba640a3ffa8e29b081bfb",
         "rx_counter": 0,
-        "tx_counter": 1199
+        "tx_counter": 1221
       }
     },
     {
@@ -185,7 +185,7 @@
       "link_key": {
         "key": "97c05aea8fe29e7ac3f034ea7c5f2503",
         "rx_counter": 0,
-        "tx_counter": 4788
+        "tx_counter": 4810
       }
     },
     {
@@ -195,7 +195,7 @@
       "link_key": {
         "key": "72f2ce81cf8788b00ba6feefcf74350b",
         "rx_counter": 0,
-        "tx_counter": 638
+        "tx_counter": 660
       }
     },
     {
@@ -205,7 +205,7 @@
       "link_key": {
         "key": "7be76fa7c2e7f17ec09e3b97ace702c3",
         "rx_counter": 0,
-        "tx_counter": 330
+        "tx_counter": 352
       }
     },
     {
@@ -215,7 +215,7 @@
       "link_key": {
         "key": "d701d24c37dc6638e76fd2bf8a671f6c",
         "rx_counter": 0,
-        "tx_counter": 1188
+        "tx_counter": 1210
       }
     },
     {
@@ -225,7 +225,7 @@
       "link_key": {
         "key": "1bc5d260e42a897c75c521dd5f53dd4c",
         "rx_counter": 0,
-        "tx_counter": 902
+        "tx_counter": 924
       }
     }
   ]
