@@ -20,9 +20,9 @@
     "0x00158d00091aebb7": {
         "linkquality": 43,
         "contact": true,
-        "voltage": 3045,
+        "voltage": 3055,
         "battery": 100,
-        "device_temperature": 28,
+        "device_temperature": 29,
         "power_outage_count": 10,
         "trigger_count": 0,
         "last_seen": "2025-04-29T10:17:24.114Z"
@@ -30,7 +30,7 @@
     "0x00158d0008d91f54": {
         "voltage": 3045,
         "battery": 100,
-        "device_temperature": 29,
+        "device_temperature": 30,
         "power_outage_count": 113,
         "illuminance": 3,
         "occupancy": false,
@@ -42,8 +42,8 @@
         "illuminance": 1,
         "battery": 17,
         "voltage": 2700,
-        "soil_moisture": 94.78,
-        "temperature_ds": 24.68,
+        "soil_moisture": 91.7,
+        "temperature_ds": 25.56,
         "linkquality": 87,
         "temperature_bme": 0,
         "humidity": 0,
@@ -63,7 +63,7 @@
     },
     "0xa4c138507fc3da4d": {
         "energy": 63.02,
-        "voltage": 222,
+        "voltage": 220,
         "state": "ON",
         "power_outage_memory": "restore",
         "indicator_mode": "on/off",
@@ -117,7 +117,7 @@
         "last_seen": "2025-04-29T10:23:29.994Z"
     },
     "0x54ef4410009b5f22": {
-        "voltage": 3118,
+        "voltage": 3124,
         "battery": 100,
         "device_temperature": 25,
         "power_outage_count": 12,
@@ -239,7 +239,7 @@
     "0x00158d0007111a9a": {
         "voltage": 3055,
         "battery": 100,
-        "device_temperature": 31,
+        "device_temperature": 32,
         "power_outage_count": 21,
         "trigger_count": 0,
         "water_leak": false,
@@ -250,8 +250,8 @@
     },
     "0x00158d00048742e4": {
         "pressure": 992.7,
-        "temperature": 26.98,
-        "humidity": 46,
+        "temperature": 27.56,
+        "humidity": 48.83,
         "voltage": 3025,
         "battery": 100,
         "power_outage_count": 180,
@@ -259,7 +259,7 @@
         "linkquality": 47
     },
     "0x54ef441000823aac": {
-        "voltage": 3110,
+        "voltage": 3111,
         "battery": 100,
         "device_temperature": 25,
         "power_outage_count": 19,
